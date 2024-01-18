@@ -20,8 +20,10 @@
     </nav>
     </header>
 
+    <div class="attack_content">
     <form method="POST" class="attack_content" action="{% url 'games:counterattack' pk %}">
-    {% csrf_token %} {{ form }}
+        <h2>{{player_a}}에게 반격하세요!</h2>
+        {% csrf_token %} {{ form }}
         <button>반격하기!</button>
     </form>
     </div>

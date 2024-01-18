@@ -22,6 +22,12 @@ def choose_winner(game: Game):
         elif game.b_choice < game.a_choice:
             game.winner = game.player_b.nickname
     game.save()
+
+def mapping_rule(rule):
+    if rule == 0:
+        return "숫자가 더 큰 사람이 대결에서 이깁니다"
+    elif rule == 1:
+        return "숫자가 더 작은 사람이 대결에서 이깁니다"
     
 # 공격하기 페이지
 def start(request):
@@ -51,13 +57,16 @@ def detail(request, pk):
     pk: Game pk
     '''
     game = Game.objects.get(pk=pk)
+    rule = mapping_rule(game.rule)
     if request.user.nickname ==  game.winner:
         result = "승리"
-    elif game.winner == None:
+    elif (game.winner == None) & (game.b_choice == None):
         result = "진행중"
+    elif (game.winner == None) & (game.b_choice != None):
+        result = "무승부"
     else:
         result = "패배"
-    ctx = {"game": game, "result": result}
+    ctx = {"game": game, "result": result, "rule": rule}
     return render(request, 'games/games_detail.html', ctx)
 
 def delete(request, pk):
@@ -75,6 +84,6 @@ def counterattack(request, pk):
         return redirect('games:game_list')
     else:
         form = GameFormDefender(instance=game)
-        ctx = {"form": form, "pk": pk}
+        ctx = {"form": form, "pk": pk, "player_a": game.player_a}
         return render(request, 'games/games_counter.html', ctx)
 
