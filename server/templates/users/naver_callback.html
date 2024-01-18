@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="ko">
   <head>
     <script
@@ -11,39 +12,37 @@
     ></script>
   </head>
   <body>
-    <!-- 네이버 로그인 버튼 노출 영역 -->
-    <div id="naver_id_login"></div>
-    <!-- //네이버 로그인 버튼 노출 영역 -->
-
-    <!-- 네이버아디디로로그인 초기화 Script -->
+    <button class="Nlogout" onclick="naverlogout()">로그아웃</button>
     <script type="text/javascript">
+      let accsTK = "";
       var naver_id_login = new naver_id_login(
-        "p3ty5OZcY15ufMgrfHPe",
-        "http://127.0.0.1:8000/login/naver_login/callback/"
+        "YOUR_CLIENT_ID",
+        "YOUR_CALLBACK_URL"
       );
-      var state = naver_id_login.getUniqState();
-      naver_id_login.setButton("white", 2, 40);
-      naver_id_login.setDomain(".service.com");
-      naver_id_login.setState(state);
-      naver_id_login.setPopup();
-      naver_id_login.init_naver_id_login();
-    </script>
-    <!-- //네이버아디디로로그인 초기화 Script -->
-
-    <!-- 네이버아디디로로그인 Callback페이지 처리 Script -->
-    <script type="text/javascript">
+      // 접근 토큰 값 출력
+      accsTK = naver_id_login.oauthParams.access_token;
+      // 네이버 사용자 프로필 조회
+      naver_id_login.get_naver_userprofile("naverSignInCallback()");
       // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
       function naverSignInCallback() {
-        // naver_id_login.getProfileData('프로필항목명');
-        // 프로필 항목은 개발가이드를 참고하시기 바랍니다.
         alert(naver_id_login.getProfileData("name"));
-        alert(naver_id_login.getProfileData("email"));
         alert(naver_id_login.getProfileData("nickname"));
       }
 
-      // 네이버 사용자 프로필 조회
-      naver_id_login.get_naver_userprofile("naverSignInCallback()");
+      // 로그아웃 버튼 클릭시 로그아웃
+      function naverlogout() {
+        fetch(
+          `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=p3ty5OZcY15ufMgrfHPe&client_secret=EfaVjbEQ5T&access_token=${accsTK}&state=9caf3774-d3e0-4977-ab79-04e4e5e0c2b5&state=be6efbf7-bf94-4b29-b36f-663213729980&service_provider=NAVER`,
+          {
+            mode: "no-cors",
+            method: "GET",
+          }
+        )
+          .then(() => {
+            console.log("로그아웃 성공");
+          })
+          .catch((error) => console.log(error));
+      }
     </script>
-    <!-- //네이버아디디로로그인 Callback페이지 처리 Script -->
   </body>
 </html>

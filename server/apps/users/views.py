@@ -11,17 +11,10 @@ from .forms import *
 #    pass
 
 def login(request):
-    if request.method == "GET":
-        context={
-            "id" : id,
-        }
-        return render(request, 'users/naver_login.html', context)
+    return render(request, 'users/naver_login.html')
+
 
 def naver_login_callback(request):
-    if request.method == "GET":
-        context={
-            "id" : id,
-        }
-        return render(request, 'users/naver_callback.html',context)   
+    return render(request, 'users/naver_callback.html')   
     
 
