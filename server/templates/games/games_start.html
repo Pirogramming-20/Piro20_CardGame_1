@@ -1,7 +1,29 @@
-{% extends 'base.html' %} 
-{% block content %}
-<form method="POST" action="{% url 'games:start' %}">
-  {% csrf_token %} {{ form }}
-  <button>공격하기!</button>
-</form>
-{% endblock content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIROGRAM CARDGAME</title>
+<link rel="stylesheet" href="{%static 'styles.css'%}">
+</head>
+<body>
+
+    <header>
+        <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+    <nav>
+        <ul>
+        <li><a href="#">게임하기</a></li>
+        <li><a href="#">랭킹보기</a></li>
+        <li><a href="#">로그아웃</a></li>
+        </ul>
+    </nav>
+    </header>
+
+    <form method="POST" class="attack_content" action="{% url 'games:start' %}">
+    {% csrf_token %} {{ form }}
+        <button>공격하기!</button>
+    </form>
+    </div>
+</body>
+</html>
