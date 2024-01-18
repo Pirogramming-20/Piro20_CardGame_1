@@ -1,0 +1,7 @@
+{% extends 'base.html' %} 
+{% block content %}
+<form method="POST" action="{% url 'games:start' %}">
+  {% csrf_token %} {{ form }}
+  <button>공격하기!</button>
+</form>
+{% endblock content %}
