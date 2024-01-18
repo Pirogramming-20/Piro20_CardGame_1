@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PIROGRAM CARDGAME</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="{%static 'styles.css'%}">
 </head>
 <body>
 
@@ -19,12 +20,10 @@
     </nav>
     </header>
 
-    <div class="bottom_buttons">
-        <form method="GET" action="{% url 'games:start' %}">
-        <button>게임하기</button>
-        </form>
-    <button>전적보기</button>
+    <form method="POST" class="attack_content" action="{% url 'games:counterattack' pk %}">
+    {% csrf_token %} {{ form }}
+        <button>반격하기!</button>
+    </form>
     </div>
 </body>
 </html>
-

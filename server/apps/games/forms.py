@@ -13,8 +13,7 @@ def make_random():
 # 1. Attacker의 form
 class GameFormAttacker(forms.ModelForm):
     a_choice = forms.IntegerField(
-        label='플레이어 A 선택 숫자', widget=forms.Select(choices=[]))
-    player_b = forms.ChoiceField(widget=forms.Select(), choices=[])
+        label='내가 고른 카드: ', widget=forms.Select(choices=[]))
 
     class Meta:
         model = Game
@@ -26,10 +25,23 @@ class GameFormAttacker(forms.ModelForm):
         choices = make_random()
         self.fields['a_choice'].widget.choices = [('----', '----')] + [
             (choice, choice) for choice in choices]
-        self.fields['a_choice'].label = "내가 고른 카드: "
         # admin과 본인을 제외한 player로 선택항목 설정
-        player_choice = User.objects.exclude(is_superuser=1).exclude(
+        self.fields['player_b'].queryset = User.objects.exclude(is_superuser=1).exclude(
             nickname=self.user.nickname)
-        self.fields['player_b'].widget.choices = [('----', '----')] + [
-            (player.nickname, player.nickname) for player in player_choice]
-        self.fields['player_b'].label = "공격할 상대는? "
+        self.fields['player_b'].label = "공격할 상대는?"
+
+# 2. Defender의 form
+class GameFormDefender(forms.ModelForm):
+    b_choice = forms.IntegerField(
+        label='내가 고른 카드: ', widget=forms.Select(choices=[]))
+    
+    class Meta:
+        model = Game
+        fields = ['b_choice']
+
+    def __init__(self, *args, **kwargs):
+        super(GameFormDefender, self).__init__(*args, **kwargs)
+        choices = make_random()
+        self.fields['b_choice'].widget.choices = [('----', '----')] + [
+            (choice, choice) for choice in choices]
+        

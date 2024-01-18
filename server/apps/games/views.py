@@ -1,12 +1,28 @@
 from django.shortcuts import render, redirect
 from .models import Game
-from .forms import GameFormAttacker
+from .forms import GameFormAttacker, GameFormDefender
 import random
 from apps.users.models import User
 from django.db.models import Q
 
+
+### utils ###
 def select_rule():
     pass
+
+def choose_winner(game: Game):
+    if game.rule == 0: # 0이면 큰 숫자가 이김
+        if game.a_choice > game.b_choice:
+            game.winner = game.player_a.nickname
+        elif game.b_choice > game.a_choice:
+            game.winner = game.player_b.nickname
+    elif game.rule == 1: # 1이면 작은 숫자가 이김
+        if game.a_choice < game.b_choice:
+            game.winner = game.player_a.nickname
+        elif game.b_choice < game.a_choice:
+            game.winner = game.player_b.nickname
+    game.save()
+    
 # 공격하기 페이지
 def start(request):
     if request.method == 'POST':  
@@ -16,7 +32,7 @@ def start(request):
             game.player_a = request.user
             game.rule = random.choice([0, 1])
             game.save()
-            pass # game_list로 redirect
+        return redirect('games:game_list')
     else:
         form = GameFormAttacker(user=request.user)
         ctx = {"form": form}
@@ -37,6 +53,8 @@ def detail(request, pk):
     game = Game.objects.get(pk=pk)
     if request.user.nickname ==  game.winner:
         result = "승리"
+    elif game.winner == None:
+        result = "진행중"
     else:
         result = "패배"
     ctx = {"game": game, "result": result}
@@ -48,4 +66,15 @@ def delete(request, pk):
     return redirect('games:game_list')
 
 def counterattack(request, pk):
-    pass
+    game = Game.objects.get(pk=pk)
+    if request.method == 'POST':  
+        form = GameFormDefender(request.POST, instance=game)
+        if form.is_valid():
+            game = form.save()
+            choose_winner(game)
+        return redirect('games:game_list')
+    else:
+        form = GameFormDefender(instance=game)
+        ctx = {"form": form, "pk": pk}
+        return render(request, 'games/games_counter.html', ctx)
+
