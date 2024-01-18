@@ -2,21 +2,21 @@
 {% load static %}
 
 {% block content %}
-  <h3>{{game}}</h3>
+  <h3>{{game.player_a.nickname}}VS{{game.player_b.nickname}}</h3>
   {% if game.b_choice == null%}
     <h4>진행 중</h4>
     <h4>나: {{game.a_choice}}</h4>
-    <form action="{% url 'posts:delete' post.pk %}" method="POST">
+    {% comment %} <form action="{% url 'games:delete' post.pk %}" method="POST">
         {%csrf_token%}
         <button type="submit" class="btn btn-danger">게임 취소</button>
-    </form>
+    </form> {% endcomment %}
   {% elif game.winner == null%}
     <a href="{% url 'games:counterattack' game.pk%}">대응하기</h4>
   {% else %}
     <h4>{{game.rule}}</h4>
     <h4>{{game.player_a.nickname}} {{game.a_choice}}</h4>
     <h4>{{game.player_b.nickname}} {{game.b_choice}}</h4>
-    
+    <h4>결과: {{result}}</h4>
   {% endif %}
-    <a href="{% url 'games:counterattack' %}">전적 목록</h4>
+    {% comment %} <a href="{% url 'games:counterattack' %}">전적 목록</h4> {% endcomment %}
   {% endblock content %}
