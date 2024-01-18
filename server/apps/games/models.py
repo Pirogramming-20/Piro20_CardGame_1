@@ -12,5 +12,4 @@ class Game(models.Model):
     rule = models.IntegerField('랜덤 규칙')
     winner = models.BooleanField(default=None, null=True)
 
-    def __str__(self):
-        return f"{self.player_a} VS {self.player_b}"
+

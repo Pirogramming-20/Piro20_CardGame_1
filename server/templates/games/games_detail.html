@@ -2,23 +2,21 @@
 {% load static %}
 
 {% block content %}
-  <p>작성자: {{post.user.name}}</p>
-  <p>나이: {{post.user.age}}</p>
-  <p>지역: {{post.region}}</p>
-  <p>가격: {{post.price}}</p>
-  <h2 class="my-3">{{post.content}}</h2>
-  <p>작성일: {{post.created_date|date:'Y년 n월 j일 G:i:s'}}</p>
-  <p>수정일: {{post.updated_date|date:'Y년 n월 j일 G:i:s'}}</p>
-  <p>이 작성자의 글</p>
-  {% for rel_post in related_posts %}
-    <a href="{% url 'posts:detail' rel_post.pk %}" class="btn btn-success">
-      {{rel_post.title}}
-    </a>
-  {% endfor %}
-
-  <hr />
-  <form action="{% url 'posts:delete' post.pk %}" method="POST">
-    {%csrf_token%}
-    <button type="submit" class="btn btn-danger">게임 취소</button>
-  </form>
-{% endblock content %}
+  <h3>{{game}}</h3>
+  {% if game.b_choice == null%}
+    <h4>진행 중</h4>
+    <h4>나: {{game.a_choice}}</h4>
+    <form action="{% url 'posts:delete' post.pk %}" method="POST">
+        {%csrf_token%}
+        <button type="submit" class="btn btn-danger">게임 취소</button>
+    </form>
+  {% elif game.winner == null%}
+    <a href="{% url 'games:counterattack' game.pk%}">대응하기</h4>
+  {% else %}
+    <h4>{{game.rule}}</h4>
+    <h4>{{game.player_a.nickname}} {{game.a_choice}}</h4>
+    <h4>{{game.player_b.nickname}} {{game.b_choice}}</h4>
+    
+  {% endif %}
+    <a href="{% url 'games:counterattack' %}">전적 목록</h4>
+  {% endblock content %}
