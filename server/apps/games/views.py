@@ -31,7 +31,16 @@ def game_list(request):
 def detail(request, pk):
     #ajax로 창 안쪽 내용만 바꿔야 할듯
     #1.게임이 끝났을 경우 - 3번 / 2. 게임이 안끝난 나의 입장 - 1번 / 3. 게임이 안끝난 상대 입장 - 2번
-    pass
+    '''
+    pk: Game pk
+    '''
+    game = Game.objects.get(pk=pk)
+    if request.user.nickname ==  game.winner:
+        result = "승리"
+    else:
+        result = "패배"
+    ctx = {"game": game, "result": result}
+    return render(request, 'games/games_detail.html', ctx)
 
 def delete(request, pk):
     if request.method == "POST":
