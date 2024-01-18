@@ -63,6 +63,7 @@ def detail(request, pk):
     elif (game.winner == None) & (game.b_choice == None):
         result = "진행중"
     elif (game.winner == None) & (game.b_choice != None):
+        print(f"game.winner: {game.winner}")
         result = "무승부"
     else:
         result = "패배"
