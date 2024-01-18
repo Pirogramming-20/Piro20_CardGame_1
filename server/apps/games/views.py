@@ -10,7 +10,7 @@ def select_rule():
 # 공격하기 페이지
 def start(request):
     if request.method == 'POST':  
-        form = GameFormAttacker(request.POST)
+        form = GameFormAttacker(request.POST, user=request.user)
         if form.is_valid():
             game = form.save(commit=False)
             game.player_a = request.user
@@ -18,7 +18,7 @@ def start(request):
             game.save()
             pass # game_list로 redirect
     else:
-        form = GameFormAttacker()
+        form = GameFormAttacker(user=request.user)
         ctx = {"form": form}
         return render(request, 'games/games_start.html', ctx)
 
