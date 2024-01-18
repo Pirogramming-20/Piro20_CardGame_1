@@ -1,8 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Game
+from .forms import GameFormAttacker
+import random
 
-def start(request):
+def select_rule():
     pass
+# 공격하기 페이지
+def start(request):
+    if request.method == 'POST':  
+        form = GameFormAttacker(request.POST)
+        if form.is_valid():
+            game = form.save(commit=False)
+            game.player_a = request.user
+            game.rule = random.choice([0, 1])
+            game.save()
+            pass # game_list로 redirect
+    else:
+        form = GameFormAttacker()
+        ctx = {"form": form}
+        return render(request, 'games/games_start.html', ctx)
 
 def game_list(request):
     pass
