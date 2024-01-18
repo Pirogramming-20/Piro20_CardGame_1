@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps',
+    'apps.users',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,7 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
-
+AUTH_USER_MODEL = 'users.User'
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 TEMPLATES = [
@@ -130,3 +134,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
