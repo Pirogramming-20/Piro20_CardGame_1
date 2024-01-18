@@ -25,8 +25,23 @@
       naver_id_login.get_naver_userprofile("naverSignInCallback()");
       // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
       function naverSignInCallback() {
-        alert(naver_id_login.getProfileData("name"));
-        alert(naver_id_login.getProfileData("nickname"));
+        const name = naver_id_login.getProfileData("name");
+        const nickname = naver_id_login.getProfileData("nickname");
+        const csrftoken = document.querySelector(
+          "[name=csrfmiddlewaretoken]"
+        ).value;
+        fetch("/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrftoken,
+          },
+          body: JSON.stringify({ name: name, nickname: nickname }),
+        })
+          .then((response) => console.log("fetch 성공"))
+          .catch((error) => {
+            console.error("Fetch error:", error);
+          });
       }
 
       // 로그아웃 버튼 클릭시 로그아웃
