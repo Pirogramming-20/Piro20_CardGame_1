@@ -50,3 +50,8 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('users:main')
+  
+  
+def naver_login_callback(request):
+    return render(request, 'users/naver_callback.html')   
+
