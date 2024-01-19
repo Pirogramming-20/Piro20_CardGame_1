@@ -45,11 +45,17 @@ header nav ul li a {
   color: white;
   text-decoration: none;
   padding: 5px 10px;
+  transition: 0.5s ease;
 }
 
 header > a {
   text-decoration: none;
   color: white;
+  transition: 0.5s ease;
+}
+
+header > a:hover {
+  border-bottom: 2px solid rgb(139, 200, 48);;
 }
 
 main {
