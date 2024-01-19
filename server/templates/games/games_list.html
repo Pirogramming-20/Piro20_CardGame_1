@@ -5,18 +5,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PIROGRAM CARDGAME</title>
-<link rel="stylesheet" href="{%static 'reset.css'%}">
 <link rel="stylesheet" href="{%static 'games_list.css'%}">
 </head>
 <body>
-
     <header>
-        <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
-        <ul>
-            <li><a href="{% url 'games:start' %}">게임하기</a></li>
-            <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
-            <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
-        </ul>
+        <a href="/"><h1>♣️ PIROGRAM CARDGAME ♦️</h1></a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'games:start' %}">게임하기</a></li>
+                <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
+                <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>

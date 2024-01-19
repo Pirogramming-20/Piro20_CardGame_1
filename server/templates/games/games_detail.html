@@ -6,23 +6,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PIROGRAM CARDGAME</title>
-  <link rel="stylesheet" href="{%static 'reset.css'%}">
   <link rel="stylesheet" href="{%static 'styles.css'%}">
-  <link rel="stylesheet" href="{%static 'games_list.css'%}">
   <link rel="stylesheet" href="{%static 'games_detail.css'%}">
 </head>
 
 <body>
   <header>
-    <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+    <a href="/"><h1>♣️ PIROGRAM CARDGAME ♦️</h1></a>
     <nav>
-      <ul>
-          <li><a href="{% url 'games:start' %}">게임하기</a></li>
-          <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
-          <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
-      </ul>
-  </nav>
-  </header>
+        <ul>
+            <li><a href="{% url 'games:start' %}">게임하기</a></li>
+            <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
+            <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
+        </ul>
+    </nav>
+</header>
 
   <main>
     <div class="game_detail-container">
@@ -80,7 +78,7 @@
       <div class="game_detail-footer">
         <form action="{% url 'games:game_list' %}" method="GET">
           {%csrf_token%}
-          <button type="submit" class="btn-neon">전적 목록</button>
+          <button type="submit" class="btn-neon btn-result">전적 목록</button>
         </form>
       </div>
     </div>

@@ -3,12 +3,12 @@
     flex-direction: column;
     background-color: #222;
     width: 80%;
-    height: 70vh;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -45%);
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
+    margin-top: 20px;
 }
 
 .game_detail-title {
@@ -56,4 +56,8 @@
     /* border-bottom: 1px solid rgb(139, 200, 48); */
     border-top: 1px solid rgb(139, 200, 48);
     padding: 12px;
+}
+
+.btn-result{
+    margin-bottom: 20px;
 }
