@@ -1,3 +1,13 @@
+
+:root{
+  --color-black : #222;
+}
+.game_start_btn{
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;}
+
 body, html {
   height: 100%;
   margin: 0;

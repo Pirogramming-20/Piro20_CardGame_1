@@ -1,6 +1,7 @@
 {% extends 'users/main.html' %} {% block content %}
-<form method="POST" action="">
+<form method="POST" action="" class="signup-block">
+  <h1>SIGN UP</h1>
   {% csrf_token %} {{ form }}
-  <input type="submit" value="SignUp" />
+  <input type="submit" value="SignUp" class="btn-neon" />
 </form>
 {% endblock content %}
