@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PIROGRAM CARDGAME</title>
-<link rel="stylesheet" href="{%static 'styles.css'%}">
+<link rel="stylesheet" href="{%static 'reset.css'%}">
 <link rel="stylesheet" href="{%static 'games_list.css'%}">
 </head>
 <body>
@@ -29,14 +29,14 @@
         <div class="games_list_content">
             <div class="current_player">현재 플레이어 : {{request.user.nickname}}</div>
         {% for game in games %}
-            <div class="game-item">
-                <h4><span>{{ forloop.counter }}</span> - {{game.game.player_a.nickname}} <span>vs</span> {{game.game.player_b.nickname}}</p>
+            <div class="game_item">
+                <h4><span>{{ forloop.counter }}</span> - {{game.game.player_a.nickname}} <span>vs</span> {{game.game.player_b.nickname}}</h4>
             {% if game.player == 'player_a' and game.result == '진행중' %}
                 <div class="progress">
                     <h4>진행 중...</h4>
                     <form action="{% url 'games:delete' game.game.pk %}" method="POST">
                     {%csrf_token%}
-                    <button type="submit" class="btn btn-counterattack">게임 취소</button>
+                    <button type="submit" class="btn-neon btn-counterattack">게임 취소</button>
                     </form>
                 </div>
                 <button class="btn-neon">게임 정보</button>
