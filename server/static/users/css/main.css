@@ -86,6 +86,7 @@ a:visited {
 .data-container {
   width: 100%;
   flex: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -122,6 +123,7 @@ a:visited {
   justify-content: center;
   align-items: center;
 }
+
 
 .main_button_list {
   display: flex;
@@ -164,4 +166,29 @@ a:visited {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 20px;
+  gap: 10px;
+}
+
+a {
+  text-decoration-line: none;
+}
+
+.social-login > .social_login3 {
+  color: rgb(139, 200, 48);
+}
+
+.social-login {
+  display: flex;
+  gap: 15px;
+  margin: 10px;
+  font-size: 20px;
+}
+
+#kakao {
+  color: rgb(203, 203, 56);
+}
+
+#google {
+  color: gray;
 }
