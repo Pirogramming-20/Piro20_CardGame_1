@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 ]
 
 
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -158,7 +159,7 @@ AUTHENTICATION_BACKENDS = (
     
 )
 
-SITE_ID = 1
+
 LOGIN_REDIRECT_URL = '/'
 
 SOCIALACCOUNT_PROVIDERS = {

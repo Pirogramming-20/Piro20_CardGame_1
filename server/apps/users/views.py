@@ -29,6 +29,10 @@ def signup(request):
         }
         return render(request, template_name='users/signup.html', context=context)
 
+def after_login(request):
+    if request.method == 'POST':
+        return redirect('users:afterlogin')
+
 
 def socaial_signup(name, nickname):
     try:
