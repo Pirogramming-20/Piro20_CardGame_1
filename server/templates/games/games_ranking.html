@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{%block head%} 
+<link rel="stylesheet" href="{%static 'ranking.css'%}">
+<link rel="stylesheet" href="{%static 'styles.css'%}">
+<title>PIROGRAM CARDGAME</title>
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    <header>
+        <a href="/"><h1>♣️ PIROGRAM CARDGAME ♦️</h1></a>
+        <nav>
+        <ul>
+            <li><a href="{% url 'users:login' %}">Login</a></li>
+            <li><a href="{% url 'users:signup' %}">SignUp</a></li>
+        </ul>
+        </nav>
+    </header>
+
+        <div class="ranking_content">
+            <h1 class="ranking_title">👑 Piro Hall of Frame 👑</h1>
+            {%for user in users%}
+            <h5>{{ forloop.counter }}등 : {{user.nickname}}님! 총 점수 : {{user.score}} 점</h5>
+            <br>
+            {% endfor %}
+        </div>
+        {% endblock %}
+
+
+</div>
+

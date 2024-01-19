@@ -6,26 +6,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PIROGRAM CARDGAME</title>
 <link rel="stylesheet" href="{%static 'styles.css'%}">
+<link rel="stylesheet" href="{%static 'users/css/after_login.css'%}">
 </head>
 <body>
 
     <header>
         <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
         <ul>
-        <li><a href="#">게임하기</a></li>
-        <li><a href="#">랭킹보기</a></li>
-        <li><a href="#">로그아웃</a></li>
+        <li><a href="{% url 'games/start' %}">게임하기</a></li>
+        <li><a href="{% url 'games/game_ranking' %}">랭킹보기</a></li>
+        <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
         </ul>
     
     </header>
 
     <main>
         <h2>전 세계 피로그래밍과<br>한 판 승부 추리 카드게임</h2>
-        <p>{{ }}님이 로그인 중</p>
+        <p>{{user.username}}님이 로그인 중</p>
     </main>
 
     <div class="bottom_buttons">
-    <button>게임하기</button>
+        <form method="GET" action="{% url 'games:start' %}">
+        <button>게임하기</button>
+        </form>
     <button>전적보기</button>
     </div>
 </body>
