@@ -3,20 +3,31 @@
 
 {% block content %}
   <h3>{{game.player_a.nickname}}VS{{game.player_b.nickname}}</h3>
-  {% if game.b_choice == null%}
+  <!--1. user==player_a & player_b가 아직 응답이 없을 때-->
+  {% if request.user.nickname == game.player_a.nickname and game.b_choice == null%}
     <h4>진행 중</h4>
     <h4>나: {{game.a_choice}}</h4>
-    {% comment %} <form action="{% url 'games:delete' post.pk %}" method="POST">
+    <form action="{% url 'games:delete' game.pk %}" method="POST">
         {%csrf_token%}
         <button type="submit" class="btn btn-danger">게임 취소</button>
-    </form> {% endcomment %}
-  {% elif game.winner == null%}
-    <a href="{% url 'games:counterattack' game.pk%}">대응하기</h4>
-  {% else %}
-    <h4>{{game.rule}}</h4>
-    <h4>{{game.player_a.nickname}} {{game.a_choice}}</h4>
+    </form>
+  <!--2. user==player_a & player_b가 응답해서 결과가 나온 상황-->
+  {% elif request.user.nickname == game.player_a.nickname and game.b_choice != null %}
+    <h4>{{rule}}</h4>
+    <h4>나: {{game.a_choice}}</h4>
     <h4>{{game.player_b.nickname}} {{game.b_choice}}</h4>
     <h4>결과: {{result}}</h4>
+  <!--3. user==player_b % 아직 응답하지 않은 상황-->
+  {% elif request.user.nickname == game.player_b.nickname  and game.b_choice == null %}
+    <form action="{% url 'games:counterattack' game.pk %}">
+      <button>반격하기</button>
+    </form>
+  <!--4. user==player_b % 결과가 나온 상황-->
+  {% else %}
+    <h4>{{rule}}</h4>
+    <h4>{{game.player_a.nickname}} {{game.a_choice}}</h4>
+    <h4>나: {{game.b_choice}}</h4>
+    <h4>결과: {{result}}</h4>
   {% endif %}
-    {% comment %} <a href="{% url 'games:counterattack' %}">전적 목록</h4> {% endcomment %}
+    <a href="{% url 'games:game_list' %}">전적 목록</h4>
   {% endblock content %}
