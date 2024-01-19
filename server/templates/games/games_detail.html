@@ -4,7 +4,7 @@
 {% block content %}
   <h3>{{game.player_a.nickname}}VS{{game.player_b.nickname}}</h3>
   <!--1. user==player_a & player_b가 아직 응답이 없을 때-->
-  {% if request.user.nickname == game.player_a.nickname and game.b_choice == null%}
+  {% if result.0 == 'player_a' and result.1 == '진행중' %}
     <h4>진행 중</h4>
     <h4>나: {{game.a_choice}}</h4>
     <form action="{% url 'games:delete' game.pk %}" method="POST">
@@ -12,7 +12,7 @@
         <button type="submit" class="btn btn-danger">게임 취소</button>
     </form>
   <!--2. user==player_a & player_b가 응답해서 결과가 나온 상황-->
-  {% elif request.user.nickname == game.player_a.nickname and game.b_choice != null %}
+  {% elif result.0 == 'player_a' and result.1 != '진행중' %}
     <h4>{{rule}}</h4>
     <h4>나: {{game.a_choice}}</h4>
     <h4>{{game.player_b.nickname}} {{game.b_choice}}</h4>
@@ -24,8 +24,9 @@
     {% elif result == '무승부'%}
     <h4><span>점수</span>: 0 점</h4>
     {%endif%}
+
   <!--3. user==player_b % 아직 응답하지 않은 상황-->
-  {% elif request.user.nickname == game.player_b.nickname  and game.b_choice == null %}
+  {% elif result.0 == 'player_b' and result.1 == '반격중'%}
     <form action="{% url 'games:counterattack' game.pk %}">
       <button>반격하기</button>
     </form>
@@ -42,6 +43,7 @@
     {% elif result == '무승부'%}
     <h4><span>점수</span>: 0 점</h4>
     {%endif%}
+
   {% endif %}
     <a href="{% url 'games:game_list' %}">전적 목록</h4>
   {% endblock content %}
