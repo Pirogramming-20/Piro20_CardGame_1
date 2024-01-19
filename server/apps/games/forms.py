@@ -13,7 +13,7 @@ def make_random():
 # 1. Attacker의 form
 class GameFormAttacker(forms.ModelForm):
     a_choice = forms.IntegerField(
-        label='내가 고른 카드: ', widget=forms.Select(choices=[]))
+        label='내가 고른 카드:', widget=forms.Select(choices=[]))
 
     class Meta:
         model = Game
@@ -33,7 +33,7 @@ class GameFormAttacker(forms.ModelForm):
 # 2. Defender의 form
 class GameFormDefender(forms.ModelForm):
     b_choice = forms.IntegerField(
-        label='내가 고른 카드', widget=forms.Select(choices=[]))
+        label='내가 고른 카드 ', widget=forms.Select(choices=[]))
     
     class Meta:
         model = Game

@@ -6,6 +6,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PIROGRAM CARDGAME</title>
 <link rel="stylesheet" href="{%static 'styles.css'%}">
+<link rel="stylesheet" href="{%static 'games_list.css'%}">
+<link rel="stylesheet" href="{%static 'games_attack.css'%}">
 </head>
 <body>
 
@@ -21,8 +23,13 @@
     </header>
 
     <form method="POST" class="attack_content" action="{% url 'games:start' %}">
-    {% csrf_token %} {{ form }}
-        <button>공격하기!</button>
+    {% csrf_token %} 
+        <div class="form-group">
+       {% for field in form %}
+           <div>{{ field.label }} {{ field }}</div>
+        {% endfor %}
+        </div>
+        <button class="btn-neon">공격하기!</button>
     </form>
     </div>
 </body>
