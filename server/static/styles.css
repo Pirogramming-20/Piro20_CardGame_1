@@ -191,3 +191,9 @@ button {
   background-color: rgb(139, 200, 48);
   color: white;
 }
+
+.diamond{
+  font-weight: bold;
+  font-size: 30px;
+  color: red !important;
+}
