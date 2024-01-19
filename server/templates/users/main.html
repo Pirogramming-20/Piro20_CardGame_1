@@ -31,6 +31,56 @@
 <!--     <div>{{user.username}}님 환영합니다.</div>
     <button class="Nlogout" onclick="naverlogout()">
       {% csrf_token %}네이버 로그아웃
+<<<<<<< HEAD
+    </button>
+
+    {% else %}
+    <li><a href="{% url 'users:login' %}">Login</a></li>
+    <a href="{% provider_login_url 'google' %}">구글 로그인</a><br />
+    <a href="{% provider_login_url 'naver' %}">네이버 로그인</a><br />
+    <a href="{% provider_login_url 'kakao' %}">카카오 로그인</a><br />
+    <li><a href="{% url 'users:signup' %}">Signup</a></li>
+    {% endif %} {% block content %} {% endblock content %}
+    <script
+      type="text/javascript"
+      src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+      charset="utf-8"
+    ></script>
+    <script
+      type="text/javascript"
+      src="http://code.jquery.com/jquery-1.11.3.min.js"
+    ></script>
+
+    <script type="text/javascript">
+      let accsTK = "";
+      var naver_id_login = new naver_id_login(
+        "JSv6sk6FvtglbqmUHUBT",
+        "http://127.0.0.1:8000/accounts/naver/login/callback/"
+      );
+      // 접근 토큰 값 출력
+      accsTK = naver_id_login.oauthParams.access_token;
+      console.log(accsTK);
+      // 네이버 사용자 프로필 조회
+      // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+
+      function naverlogout() {
+        fetch(
+          `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=JSv6sk6FvtglbqmUHUBT&client_secret=cAjdyN7dnC&access_token=${accsTK}&state=9caf3774-d3e0-4977-ab79-04e4e5e0c2b5&state=be6efbf7-bf94-4b29-b36f-663213729980&service_provider=NAVER`,
+          {
+            mode: "no-cors",
+            method: "GET",
+          }
+        )
+          .then(() => {
+            console.log("로그아웃 성공");
+          })
+          .catch((error) => console.log(error));
+      }
+    </script>
+  </body>
+</html>
+=======
     </button> -->
 </body>
 </html>
+>>>>>>> 1ef3c1ba7745070d08d065500fb4e0d423f2a332
