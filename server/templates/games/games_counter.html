@@ -11,21 +11,23 @@
 
     <header>
         <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+
     <nav>
         <ul>
-        <li><a href="#">게임하기</a></li>
-        <li><a href="#">랭킹보기</a></li>
-        <li><a href="#">로그아웃</a></li>
+            <li><a href="{% url 'games:start' %}">게임하기</a></li>
+            <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
+            <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
         </ul>
     </nav>
+    
     </header>
 
     <div class="attack_content">
     <form method="POST" class="attack_content" action="{% url 'games:counterattack' pk %}">
         <h2>{{player_a}}에게 반격하세요!</h2>
         {% csrf_token %} {{ form }}
-        <button>반격하기!</button>
-    </form>
+        <button class="btn-neon">반격하기!</button>
+    </form> 
     </div>
 </body>
 </html>
