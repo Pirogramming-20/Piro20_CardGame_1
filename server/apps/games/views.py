@@ -13,14 +13,14 @@ def select_rule():
 def choose_winner(game: Game):
     if game.rule == 0: # 0이면 큰 숫자가 이김
         if game.a_choice > game.b_choice:
-            game.winner = game.player_a.nickname
+            game.winner = game.player_a.username
         elif game.b_choice > game.a_choice:
-            game.winner = game.player_b.nickname
+            game.winner = game.player_b.username
     elif game.rule == 1: # 1이면 작은 숫자가 이김
         if game.a_choice < game.b_choice:
-            game.winner = game.player_a.nickname
+            game.winner = game.player_a.username
         elif game.b_choice < game.a_choice:
-            game.winner = game.player_b.nickname
+            game.winner = game.player_b.username
     game.save()
 
 def mapping_rule(rule):
@@ -31,10 +31,10 @@ def mapping_rule(rule):
 
 def game_status(game: Game, user):
     # 1. 유저가 a 일때
-    if (game.player_a.nickname == user.nickname):
+    if (game.player_a.username == user.username):
         # 1-a: 승부가 난 경우
         if (game.b_choice != None):
-            if game.winner == user.nickname:
+            if game.winner == user.username:
                 return ["player_a", "승리"]
             elif game.winner == None:
                 return ["player_a","무승부"]
@@ -47,7 +47,7 @@ def game_status(game: Game, user):
     else:
         ## 2-a: 승부가 난 경우
         if (game.b_choice != None):
-            if game.winner == user.nickname:
+            if game.winner == user.username:
                 return ["player_b", "승리"]
             elif game.winner == None:
                 return ["player_b","무승부"]
@@ -73,8 +73,8 @@ def start(request):
         return render(request, 'games/games_start.html', ctx)
 
 def game_list(request):
-    user_nickname = request.user.nickname
-    games = Game.objects.filter(Q(player_a__nickname=user_nickname) | Q(player_b__nickname=user_nickname))
+    user_username = request.user.username
+    games = Game.objects.filter(Q(player_a__username=user_username) | Q(player_b__username=user_username))
 
     # game_status 가 추가된 데이터 
     games_with_status = []
@@ -103,10 +103,10 @@ def delete(request, pk):
 
 def score(request, game:Game) :
     
-    if request.user.nickname == game.winner :
+    if request.user.username == game.winner :
         game.player_b.score = game.player_b.score + game.b_choice
         game.player_a.score = game.player_a.score - game.a_choice
-    elif game.player_a.nickname == game.winner :
+    elif game.player_a.username == game.winner :
         game.player_b.score = game.player_b.score - game.b_choice
         game.player_a.score = game.player_a.score + game.a_choice
     

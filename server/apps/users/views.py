@@ -8,8 +8,7 @@ from .models import User,SocialUser
 import json
 
 def main(request):
-    return render(request, "users/main.html")
-
+    return render(request, "users/start.html")
 
 def signup(request):
     if request.method == 'POST':
@@ -31,6 +30,10 @@ def signup(request):
             'form': form,
         }
         return render(request, template_name='users/signup.html', context=context)
+
+def after_login(request):
+    if request.method == 'POST':
+        return redirect('users:afterlogin')
 
 
 def socaial_signup(name, nickname):
