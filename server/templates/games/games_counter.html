@@ -11,13 +11,15 @@
 
     <header>
         <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
-        <nav>
-            <ul>
-            <li><a href="#">게임하기</a></li>
-            <li><a href="#">랭킹보기</a></li>
-            <li><a href="#">로그아웃</a></li>
-            </ul>
-        </nav>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'games:start' %}">게임하기</a></li>
+            <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
+            <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
+        </ul>
+    </nav>
+    
     </header>
 
     <div class="attack_content">
