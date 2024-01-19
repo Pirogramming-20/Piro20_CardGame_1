@@ -50,3 +50,19 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('users:main')
+
+
+
+####소셜로그인 구분라인##############################################################
+# from allauth.socialaccount.views import SignupView
+
+# class CustomSignupView(SignupView):
+
+#     def get_context_data(self, **kwargs):
+#         context = super(CustomSignupView, self).get_context_data(**kwargs)
+#         # 컨텍스트에 필요한 추가 데이터를 포함시킵니다
+#         return context
+
+#     def form_valid(self, form):
+#         # 폼이 유효할 때의 처리 로직을 커스터마이즈합니다
+#         return super(CustomSignupView, self).form_valid(form)
