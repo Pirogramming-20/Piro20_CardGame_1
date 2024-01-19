@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{%block head%} 
+<link rel="stylesheet" href="{%static 'ranking.css'%}">
+{% endblock %}
 {% block content %}
 <div class="box-content">
-<div class="boxtitle">Piro 명예의 전당</div>
+<div class="boxtitle">👑 Piro 명예의 전당 👑</div>
 {%for user in users%}
 <h5>{{ forloop.counter }}등 : {{user.nickname}}님! 총 점수 : {{user.score}} 점</h5>
 <br>
