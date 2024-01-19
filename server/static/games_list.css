@@ -1,0 +1,94 @@
+body, html {
+    color: white;
+    font-family: Arial, sans-serif;
+    background-color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #222;
+}
+main{
+    width: 80%;
+    margin: 30px auto;
+}
+header h1 {
+font-size: 24px;
+}
+
+header nav ul {
+list-style: none;
+display: flex;
+}
+
+header nav ul li a {
+color: white;
+text-decoration: none;
+padding: 5px 10px;
+}
+
+.game_list_header,
+.game_list_content{
+    width: 80%;
+    margin: 20px 0; 
+}
+
+
+.game_result_title{
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.current_player, h4{
+    font-size : 18px;
+    font-weight: bold;
+}
+
+.current_player{
+    margin: 70px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid rgb(139, 200, 48);
+}
+
+.result_info{
+    font-size: 16px;
+    color:rgb(174, 173, 173);
+    margin-bottom: 5px;
+}
+
+.game_item{
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game_item > h4 > span{
+    color: rgb(139, 200, 48);
+    font-size: 20px;
+    font-weight: bold;
+}
+.progress{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.btn-neon {
+    font-size: 18px;
+    font-weight: bold;
+    background-color: transparent;
+    color: rgb(139, 200, 48);
+    border: 3px solid rgb(139, 200, 48);
+    border-radius: 5px;
+    transition: 0.5s ease;
+}
+.btn-neon:hover {
+    background-color: rgb(139, 200, 48);
+    color: white;
+}

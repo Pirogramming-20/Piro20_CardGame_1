@@ -5,8 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PIROGRAM CARDGAME</title>
-<link rel="stylesheet" href="{%static 'styles.css'%}">
-<link rel="stylesheet" href="{%static 'styles_games.css'%}">
+<link rel="stylesheet" href="{%static 'reset.css'%}">
+<link rel="stylesheet" href="{%static 'games_list.css'%}">
 </head>
 <body>
 
@@ -20,30 +20,44 @@
     </header>
 
     <main>
+        <div class="game_list_header">
+            <h1 class="game_result_title">게임전적</h1>
+            <h4 class="result_info">현재 플레이어의 게임 전적을 보여주는 페이지입니다. 진행 중인 게임은 취소할 수 있어요!</h4>
+            <h4 class="result_info">물론 자신이 공격한 (= 도전장을 내민) 게임만 해당되겠죠?</h4>
+        </div>
         {% if request.user.is_authenticated %}
-        <br>현재 플레이어의 게임 전적을 보여주는 페이지입니다. 진행 중인 게임은 취소할 수 있어요!</br> 
-        <br>물론 자신이 공격한 (= 도전장을 내민) 게임만 해당되겠죠?</br>
-        <div class="games-list">
+        <div class="games_list_content">
+            <div class="current_player">현재 플레이어 : {{request.user.nickname}}</div>
         {% for game in games %}
-            <div class="game-item">
-            <p>{{game.game.player_a.nickname}} vs {{game.game.player_b.nickname}}</p>
+            <div class="game_item">
+                <h4><span>{{ forloop.counter }}</span> - {{game.game.player_a.nickname}} <span>vs</span> {{game.game.player_b.nickname}}</h4>
             {% if game.player == 'player_a' and game.result == '진행중' %}
-            <p>진행 중...</p>
-            <form action="{% url 'games:delete' game.game.pk %}" method="POST">
-            {%csrf_token%}
-            <button type="submit">게임 취소</button>
-            </form>
-            <button>게임 정보</button>
+                <div class="progress">
+                    <h4>진행 중...</h4>
+                    <form action="{% url 'games:delete' game.game.pk %}" method="POST">
+                    {%csrf_token%}
+                    <button type="submit" class="btn-neon btn-counterattack">게임 취소</button>
+                    </form>
+                </div>
+                <form class="btn-neon" action="{% url 'games:detail' game.game.pk %}" method="POST">
+                    {%csrf_token%}
+                    <button>게임 정보</button>
+                    </form>
             {% elif game.player == 'player_b' and game.result == '반격중' %}
-            <form action="{% url 'games:counterattack' game.game.pk %}" method="POST">
-            {%csrf_token%}
-            <button type="submit">반격하기</button>
-            </form>
-            <button>게임 정보</button>
-
+                <form action="{% url 'games:counterattack' game.game.pk %}" method="POST">
+                {%csrf_token%}
+                <button type="submit" class="btn-neon btn-counterattack">반격하기</button>
+                </form>
+                <form class="btn-neon" action="{% url 'games:detail' game.game.pk %}" method="POST">
+                    {%csrf_token%}
+                    <button>게임 정보</button>
+                    </form>
             {% else %}
-            <p>결과:{{game.result}}</p>
-            <button>게임 정보</button>
+                <h4>결과:{{game.result}}</h4>
+                <form class="btn-neon" action="{% url 'games:detail' game.game.pk %}" method="POST">
+                    {%csrf_token%}
+                    <button>게임 정보</button>
+                    </form>
             {% endif %}
             </div>
         {% endfor %}
