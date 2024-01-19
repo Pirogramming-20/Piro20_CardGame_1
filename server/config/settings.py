@@ -221,7 +221,7 @@ SOCIALACCOUNT_PROVIDERS ={
 "access_type": "online",
 'prompt': 'select_account',
 }}}
-
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # SOCIALACCOUNT_PROVIDERS = {"naver": {
 # "APP": {
