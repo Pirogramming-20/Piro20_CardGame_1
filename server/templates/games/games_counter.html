@@ -11,23 +11,21 @@
 
     <header>
         <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+    <nav>
         <ul>
         <li><a href="#">게임하기</a></li>
         <li><a href="#">랭킹보기</a></li>
         <li><a href="#">로그아웃</a></li>
         </ul>
-    
+    </nav>
     </header>
 
-    <main>
-        <h2>전 세계 피로그래밍과<br>한 판 승부 추리 카드게임</h2>
-        <p>{{ }}님이 로그인 중</p>
-    </main>
-
-    <div class="bottom_buttons">
-    <button>게임하기</button>
-    <button>전적보기</button>
+    <div class="attack_content">
+    <form method="POST" class="attack_content" action="{% url 'games:counterattack' pk %}">
+        <h2>{{player_a}}에게 반격하세요!</h2>
+        {% csrf_token %} {{ form }}
+        <button>반격하기!</button>
+    </form>
     </div>
 </body>
 </html>
-

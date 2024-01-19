@@ -1,4 +1,11 @@
-{% extends 'users/main.html' %} {% block content %}
+<!-- {% extends 'users/main.html' %} {% block head %}
+<script
+  type="text/javascript"
+  src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+  charset="utf-8"
+></script>
+{% endblock head %} 
+{% block content %} -->
 <form method="POST" action="">
   {% csrf_token %} {{ form }}
   <li><a href="{% url 'users:login' %}">Login</a></li>
@@ -8,4 +15,16 @@
   <li><a href="{% url 'users:signup' %}">Signup</a></li>
   <button>Login</button>
 </form>
+<div id="naver_id_login"></div>
+<script type="text/javascript">
+  var naver_id_login = new naver_id_login(
+    "p3ty5OZcY15ufMgrfHPe",
+    "http://127.0.0.1:8000/login/naver_login/callback/"
+  );
+  var state = naver_id_login.getUniqState();
+  naver_id_login.setButton("white", 2, 40);
+  naver_id_login.setDomain(".service.com");
+  naver_id_login.setState(state);
+  naver_id_login.init_naver_id_login();
+</script>
 {% endblock content %}
