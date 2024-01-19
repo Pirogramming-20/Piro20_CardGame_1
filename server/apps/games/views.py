@@ -75,6 +75,19 @@ def delete(request, pk):
         Game.objects.get(id=pk).delete()
     return redirect('games:game_list')
 
+def score(request, game:Game) :
+    
+    if request.user.nickname == game.winner :
+        game.player_b.score = game.player_b.score + game.b_choice
+        game.player_a.score = game.player_a.score - game.a_choice
+    elif game.player_a.nickname == game.winner :
+        game.player_b.score = game.player_b.score - game.b_choice
+        game.player_a.score = game.player_a.score + game.a_choice
+    
+    game.player_a.save()
+    game.player_b.save()
+    game.save()
+    
 def counterattack(request, pk):
     game = Game.objects.get(pk=pk)
     if request.method == 'POST':  
@@ -82,9 +95,15 @@ def counterattack(request, pk):
         if form.is_valid():
             game = form.save()
             choose_winner(game)
+            if choose_winner:
+                score(request, game)
         return redirect('games:game_list')
     else:
         form = GameFormDefender(instance=game)
         ctx = {"form": form, "pk": pk, "player_a": game.player_a}
         return render(request, 'games/games_counter.html', ctx)
 
+def ranking(request):
+    users = User.objects.filter(is_superuser=False).order_by('-score')
+    ctx = {"users": users}
+    return render(request, 'games/games_ranking.html', ctx)
