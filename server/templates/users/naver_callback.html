@@ -31,7 +31,7 @@
           "[name=csrfmiddlewaretoken]"
         ).value;
         fetch("/", {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             "X-CSRFToken": csrftoken,
