@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -15,7 +15,7 @@
         <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
         <nav>
         <ul>
-            <li><a href="{% url 'users:signup' %}">로그인</a></li>
+            <li><a href="{% url 'users:login' %}">로그인</a></li>
         </ul>
         </nav>
     </header>
@@ -28,15 +28,16 @@
     </main>
 
     </div>
-<!--     <div>{{user.username}}님 환영합니다.</div>
+    {% if user.is_authenticated %}
+    
+    <div>{{user.username}}님 환영합니다.</div>
+  <li><a href="{% url 'users:logout' %}">Logout</a></li>
     <button class="Nlogout" onclick="naverlogout()">
       {% csrf_token %}네이버 로그아웃
     </button>
 
     {% else %}
     <li><a href="{% url 'users:login' %}">Login</a></li>
-    <a href="{% provider_login_url 'google' %}">구글 로그인</a><br />
-    <a href="{% provider_login_url 'naver' %}">네이버 로그인</a><br />
     <a href="{% provider_login_url 'kakao' %}">카카오 로그인</a><br />
     <li><a href="{% url 'users:signup' %}">Signup</a></li>
     {% endif %} {% block content %} {% endblock content %}
@@ -78,8 +79,5 @@
     </script>
   </body>
 </html>
-    </button> -->
 
-   
-</body>
-</html>
+

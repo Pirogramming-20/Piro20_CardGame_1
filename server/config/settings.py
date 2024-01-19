@@ -165,16 +165,63 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_REDIRECT_URL = '/'
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
 
 
+
+
+
+
+SOCIALACCOUNT_PROVIDERS ={
+"kakao": {
+"APP": {
+"client_id":("c41c9d1accde350cbb76e4e36c29fe16"),
+"secret": ("ff382e4f5f698f02d99418484b623a14"),
+"key": ""
+},
+# These are provider-specific settings that can only be
+# listed here:
+"SCOPE": [
+
+
+],
+
+"AUTH_PARAMS": {
+"access_type": "online",
+}}}
+
+
+
+# SOCIALACCOUNT_PROVIDERS = {"naver": {
+# "APP": {
+# "client_id": os.getenv("JSv6sk6FvtglbqmUHUBT"),
+# "secret": os.getenv("cAjdyN7dnC"),
+# "key": ""
+# },
+# # These are provider-specific settings that can only be
+# # listed here:
+# "SCOPE": [
+# "profile",
+# "email",
+# ],
+
+# "AUTH_PARAMS": {
+# "access_type": "online",
+# }}}
+
+# SOCIALACCOUNT_PROVIDERS = {
+# "google": {
+# "APP": {
+# "client_id": os.getenv("765028604986-4bb5fu9s2147c3qsvqbq6g8af2jekc8j.apps.googleusercontent.com"),
+# "secret": os.getenv("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"),
+# "key": ""
+# },
+# # These are provider-specific settings that can only be
+# # listed here:
+# "SCOPE": [
+# "profile",
+# "email",
+# ],
+
+# "AUTH_PARAMS": {
+# "access_type": "online",
+# }}}
