@@ -1,27 +1,36 @@
-{% load socialaccount %} {% providers_media_js %}
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    {% block head %} {% endblock head %}
-  </head>
-  <body>
-    {% if user.is_authenticated %}
-    <li><a href="{% url 'users:logout' %}">Logout</a></li>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIROGRAM CARDGAME</title>
+<script src="scripts.js" defer></script>
+<link rel="stylesheet" href="{%static 'styles.css'%}">
+</head>
+<body>
 
-    <div>{{user.username}}님 환영합니다.</div>
+    <div class="container">
+    <header>
+        <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+        <nav>
+        <ul>
+            <li><a href="{% url 'users:signup' %}">로그인</a></li>
+        </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+        <h2>전 세계 피로그래밍과<br>한 판 승부 추리 카드게임</h2>
+        <button onclick="startGame()">게임하기</button>
+        </section>
+    </main>
+
+    </div>
+<!--     <div>{{user.username}}님 환영합니다.</div>
     <button class="Nlogout" onclick="naverlogout()">
       {% csrf_token %}네이버 로그아웃
-    </button>
-    
-    {% else %}
-    <li><a href="{% url 'users:login' %}">Login</a></li>
-    <a href="{% provider_login_url 'google' %}">구글 로그인</a><br />
-    <a href="{% provider_login_url 'kakao' %}">카카오 로그인</a><br />
-    <li><a href="{% url 'users:signup' %}">Signup</a></li>
-    {% endif %} {% block content %} {% endblock content %}
-  </body>
+    </button> -->
+</body>
 </html>

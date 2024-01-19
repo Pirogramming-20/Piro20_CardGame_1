@@ -16,4 +16,3 @@ class SocialUser(models.Model):
     sns_nickname = models.CharField(max_length=16)
     user_pk = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='유저번호')
 
-
