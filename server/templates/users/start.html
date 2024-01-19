@@ -1,0 +1,12 @@
+{% extends 'users/main.html' %}{% block content %}
+<main>
+    <section>
+    <h2>전 세계 피로그래밍과<br>한 판 승부 추리 카드게임</h2>
+    {% if user.is_authenticated %}
+    <a class ="gamestart-btn" href="{% url 'games:start' %}">게임하기</a>
+    {% else %}
+    <button onclick="alert('게임을 시작하기 전 로그인 해주세요');">게임하기</button>
+    {% endif %}
+    </section>
+</main>
+{% endblock content %}

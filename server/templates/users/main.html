@@ -1,87 +1,47 @@
-{% load static %}{% load socialaccount %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PIROGRAM CARDGAME</title>
-<script src="scripts.js" defer></script>
-<link rel="stylesheet" href="{%static 'styles.css'%}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIROGRAM CARDGAME</title>
+  <script
+    type="text/javascript"
+    src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+    charset="utf-8"
+    ></script>
+  <script
+    type="text/javascript"
+    src="http://code.jquery.com/jquery-1.11.3.min.js"
+  ></script>
+  <!-- <script src="/Piro20_CardGame_1/server/static/scripts.js" defer></script> -->
+  <link rel="stylesheet" href="{%static 'styles.css'%}">
+  <link rel="stylesheet" href="{%static 'users/css/yangs.css'%}">
 </head>
 <body>
 
     <div class="container">
     <header>
-        <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+        <a href="/"><h1>♣️ PIROGRAM CARDGAME ♦️</h1></a>
         <nav>
+        {% if user.is_authenticated %}
+          <div>{{user.username}}님 환영합니다.</div>
+          <a href="{% url 'users:logout' %}">Logout</a>
+          <button class="Nlogout" onclick="naverlogout()">
+            {% csrf_token %}네이버 로그아웃
+          </button>
+          {% else %}
         <ul>
-            <li><a href="{% url 'users:signup' %}">로그인</a></li>
+            <li><a href="{% url 'users:login' %}">Login</a></li>
+            <li><a href="{% url 'users:signup' %}">SignUp</a></li>
         </ul>
+        {% endif %}
         </nav>
     </header>
-
-    <main>
-        <section>
-        <h2>전 세계 피로그래밍과<br>한 판 승부 추리 카드게임</h2>
-        <button onclick="startGame()">게임하기</button>
-        </section>
-    </main>
-
+    {% block content %} {% endblock content %}
     </div>
-    {% if user.is_authenticated %}
     
-    <div>{{user.username}}님 환영합니다.</div>
-    <li><a href="{% url 'users:logout' %}">Logout</a></li>
-    <button class="Nlogout" onclick="naverlogout()">
-      {% csrf_token %}네이버 로그아웃
-    </button>
-
-    {% else %}
-    <li><a href="{% url 'users:login' %}">Login</a></li>
-    <a href="{% url 'users:login' %}">구글 로그인</a><br />
-    <a href="{% url 'users:login' %}">카카오 로그인</a><br />
-    <li><a href="{% url 'users:signup' %}">Signup</a></li>
-    {% endif %} {% block content %} {% endblock content %}
-    <script
-      type="text/javascript"
-      src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-      charset="utf-8"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://code.jquery.com/jquery-1.11.3.min.js"
-    ></script>
-
-    <script type="text/javascript">
-      let accsTK = "";
-      var naver_id_login = new naver_id_login(
-        "JSv6sk6FvtglbqmUHUBT",
-        "http://127.0.0.1:8000/accounts/naver/login/callback/"
-      );
-      // 접근 토큰 값 출력
-      accsTK = naver_id_login.oauthParams.access_token;
-      console.log(accsTK);
-      // 네이버 사용자 프로필 조회
-      // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-
-      function naverlogout() {
-        fetch(
-          `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=JSv6sk6FvtglbqmUHUBT&client_secret=cAjdyN7dnC&access_token=${accsTK}&state=9caf3774-d3e0-4977-ab79-04e4e5e0c2b5&state=be6efbf7-bf94-4b29-b36f-663213729980&service_provider=NAVER`,
-          {
-            mode: "no-cors",
-            method: "GET",
-          }
-        )
-          .then(() => {
-            console.log("로그아웃 성공");
-          })
-          .catch((error) => console.log(error));
-      }
-    </script>
   </body>
 </html>
-    </button>
 
-   
-</body>
-</html>
+
