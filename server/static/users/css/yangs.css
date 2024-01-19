@@ -1,0 +1,20 @@
+header > a{
+    text-decoration: none;
+}
+
+a:visited{
+    text-decoration: none;
+    color: white;
+}
+
+.gamestart-btn{
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: #5dade2;
+    color:black;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 16px;
+}

@@ -4,8 +4,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
 
 def main(request):
-    return render(request, "users/main.html")
-
+    return render(request, "users/start.html")
 
 def signup(request):
     if request.method == 'POST':

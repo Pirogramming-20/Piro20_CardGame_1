@@ -1,17 +1,45 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    {% if user.is_authenticated %}
-    <li><a href="{% url 'users:logout' %}">Logout</a></li>
-    {% else %}
-    <li><a href="{% url 'users:login' %}">Login</a></li>
-    <li><a href="{% url 'users:signup' %}">Signup</a></li>
-    {% endif %} {% block content %} {% endblock content %}
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIROGRAM CARDGAME</title>
+  <script
+    type="text/javascript"
+    src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+    charset="utf-8"
+    ></script>
+  <script
+    type="text/javascript"
+    src="http://code.jquery.com/jquery-1.11.3.min.js"
+  ></script>
+  <!-- <script src="/Piro20_CardGame_1/server/static/scripts.js" defer></script> -->
+  <link rel="stylesheet" href="{%static 'styles.css'%}">
+  <link rel="stylesheet" href="{%static 'users/css/yangs.css'%}">
+</head>
+<body>
+
+    <div class="container">
+    <header>
+        <a href="/"><h1>♣️ PIROGRAM CARDGAME ♦️</h1></a>
+        <nav>
+        {% if user.is_authenticated %}
+          <div>{{user.username}}님 환영합니다.</div>
+          <a href="{% url 'users:logout' %}">Logout</a>
+          <button class="Nlogout" onclick="naverlogout()">
+            {% csrf_token %}네이버 로그아웃
+          </button>
+          {% else %}
+        <ul>
+            <li><a href="{% url 'users:login' %}">Login</a></li>
+            <li><a href="{% url 'users:signup' %}">SignUp</a></li>
+        </ul>
+        {% endif %}
+        </nav>
+    </header>
+    {% block content %} {% endblock content %}
+    </div>
+    
   </body>
 </html>
