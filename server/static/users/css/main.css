@@ -1,5 +1,4 @@
 header {
-  height: 80.16px !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,14 +6,32 @@ header {
   background-color: #222;
 }
 
-header > a {
-  text-decoration: none;
+header h1 {
+  font-size: 24px;
 }
 
-header {
+header nav ul {
+  list-style: none;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+}
+
+header nav ul li a {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  transition: 0.5s ease;
+}
+
+header > a {
+  text-decoration: none;
+  color: white;
+  transition: 0.5s ease;
+}
+
+header > a:hover {
+  border-bottom: 2px solid rgb(139, 200, 48);;
 }
 
 a:visited {

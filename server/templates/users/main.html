@@ -16,13 +16,12 @@
     ></script>
     <!-- <script src="/Piro20_CardGame_1/server/static/scripts.js" defer></script> -->
     <link rel="stylesheet" href="{%static 'styles.css'%}" />
-    <link rel="stylesheet" href="{%static 'reset.css'%}" />
     <link rel="stylesheet" href="{%static 'users/css/main.css'%}" />
   </head>
   <body>
     <div class="container">
       <header>
-        <a href="/"><h1>♣️ PIROGRAM CARDGAME ♦️</h1></a>
+        <a href="/"><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a>
         <nav>
           {% if user.is_authenticated %}
           <div class="after_login_menu">
