@@ -15,7 +15,6 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            auth.login(request, user)
             return redirect('users:main')
         else:
             ctx={
@@ -89,7 +88,7 @@ def login(request):
                 return redirect('users:main')
                 # 로그 아웃 버튼을 누를 때, 네이버 로그아웃, User 로그 아웃 둘다 수행 해야함
 
-                          
+                    
 
 def logout(request):
     auth.logout(request)
