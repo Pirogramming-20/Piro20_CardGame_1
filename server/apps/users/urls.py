@@ -10,6 +10,5 @@ urlpatterns = [
     path("logout/", views.logout, name="logout"),
     path("signup/", views.signup, name="signup"),
     path("after_login/", views.after_login, name="afterlogin"),
-
-    path('login/naver_login/callback/', views.naver_login_callback),
+    #path('login/naver_login/callback/', views.naver_login_callback),
 ]
