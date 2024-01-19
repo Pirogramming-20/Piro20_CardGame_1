@@ -2,14 +2,25 @@
 <div class="login-form-container">
   <form method="POST" action="" class="login-form">
     {% csrf_token %} {{ form }}
-    <li class="django-login">
-      <a href="{% url 'users:login' %}">Login</a
-      ><a href="{% url 'users:signup' %}">Signup</a>
-    </li>
+    <div class="django-login social-login">
+      <a class="social_login3" href="{% url 'users:signup' %}">Signup</a>
+    </div>
     <div class="social-login">
-      <a href="{% provider_login_url 'google' %}">구글 로그인</a><br />
-      <a href="{% provider_login_url 'naver' %}">네이버 로그인</a><br />
-      <a href="{% provider_login_url 'kakao' %}">카카오 로그인</a><br />
+      <a
+        id="google"
+        class="social_login3"
+        href="{% provider_login_url 'google' %}"
+        >구글 로그인</a
+      >
+      <a class="social_login3" href="{% provider_login_url 'naver' %}"
+        >네이버 로그인</a
+      >
+      <a
+        id="kakao"
+        class="social_login3"
+        href="{% provider_login_url 'kakao' %}"
+        >카카오 로그인</a
+      >
     </div>
     <button class="btn-neon">Login</button>
   </form>
