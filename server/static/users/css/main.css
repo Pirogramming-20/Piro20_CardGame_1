@@ -193,19 +193,33 @@ a {
 
 .social-login > .social_login3 {
   color: rgb(139, 200, 48);
+  font-size: 30px;
 }
 
 .social-login {
   display: flex;
-  gap: 15px;
+  gap: 50px;
   margin: 10px;
   font-size: 20px;
 }
 
 #kakao {
-  color: rgb(203, 203, 56);
+  color: black;
+  height: 40px;
 }
 
 #google {
   color: gray;
+  height: 40px;
+}
+
+#naver{
+  color: rgb(167, 167, 51);
+  height: 40px;
+  width: 40px;
+}
+
+#login-btn{
+  color: black !important;
+  font-size: 20px; 
 }
