@@ -1,0 +1,128 @@
+header > a{
+    text-decoration: none;
+}
+
+a:visited{
+    text-decoration: none;
+    color:white;
+}
+
+
+.after_login_menu{
+    display:flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left:10px;
+}
+
+
+.gamestart-btn{
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background-color: #5dade2;
+    color:black;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+.signup-input{
+    width: 500px;
+    height: 50px;
+    margin :20px;
+}
+
+.signup-block{
+    width: 800px;
+    height: 600px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+
+    background-color: var(--color-black);
+}
+
+.signup-block > div{
+    display:flex;
+    flex-direction: column;
+}
+
+.signup-block > div > label{
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: white;
+}
+
+.signup-block > h1{
+    color: black;
+    font-size: 50px;
+}
+
+
+.data-container{
+    width:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+    opacity: 0.8;
+}
+
+.btn-neon {
+    font-size: 18px;
+    font-weight: bold;
+    background-color: transparent;
+    color: rgb(139, 200, 48)!important;
+    border: 3px solid rgb(139, 200, 48);
+    border-radius: 5px;
+    transition: 0.5s ease;
+}
+.btn-neon:hover {
+    background-color: rgb(139, 200, 48);
+    color: white;
+}
+
+.main_button_list{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top:10px;
+}
+
+
+.main-slogun{
+    font-size:35px;
+    color:white;
+}
+
+.connect-user-hi{
+    margin : 0px 0 20px;
+}
+.connect-user-hi>span{
+    font-size : 20px;
+    font-weight: bold;
+}
+
+.login-form-container
+{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+

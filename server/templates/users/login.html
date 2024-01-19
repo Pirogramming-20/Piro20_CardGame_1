@@ -1,11 +1,15 @@
 {% extends 'users/main.html' %} {% block content %}
-<form method="POST" action="">
+<div class="login-form-container">
+  <form method="POST" action="" class="login-form">
   {% csrf_token %} {{ form }}
-  <li><a href="{% url 'users:login' %}">Login</a><a href="{% url 'users:signup' %}">Signup</a></li>
-  <div></div>
-  <a class="social-login">구글 로그인</a>
-  <a class="social-login">네이버 로그인</a>
-  <a class="social-login">카카오 로그인</a>
-  <button>Login</button>
+  <li class="django-login"><a href="{% url 'users:login' %}">Login</a><a href="{% url 'users:signup' %}">Signup</a></li>
+  <div class="social-login">
+    <a class="social-login-btn">구글 로그인</a>
+    <a class="social-login-btn">네이버 로그인</a>
+    <a class="social-login-btn">카카오 로그인</a>
+  </div>
+  <button class="btn-neon">Login</button>
 </form>
+</div>
+
 {% endblock content %}
