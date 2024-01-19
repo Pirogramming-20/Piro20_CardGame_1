@@ -1,49 +1,89 @@
-{% extends 'base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="ko">
 
-{% block content %}
-  <h3>{{game.player_a.nickname}}VS{{game.player_b.nickname}}</h3>
-  <!--1. user==player_a & player_b가 아직 응답이 없을 때-->
-  {% if result.0 == 'player_a' and result.1 == '진행중' %}
-    <h4>진행 중</h4>
-    <h4>나: {{game.a_choice}}</h4>
-    <form action="{% url 'games:delete' game.pk %}" method="POST">
-        {%csrf_token%}
-        <button type="submit" class="btn btn-danger">게임 취소</button>
-    </form>
-  <!--2. user==player_a & player_b가 응답해서 결과가 나온 상황-->
-  {% elif result.0 == 'player_a' and result.1 != '진행중' %}
-    <h4>{{rule}}</h4>
-    <h4>나: {{game.a_choice}}</h4>
-    <h4>{{game.player_b.nickname}} {{game.b_choice}}</h4>
-    <h4>결과: {{result}}</h4>
-    {% if result == '승리'%}
-    <h4><span>점수</span>: {{game.a_choice}} 점</h4>
-    {% elif result == '패배'%}
-    <h4><span>점수</span>: -{{game.a_choice}} 점</h4>
-    {% elif result == '무승부'%}
-    <h4><span>점수</span>: 0 점</h4>
-    {%endif%}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIROGRAM CARDGAME</title>
+  <link rel="stylesheet" href="{%static 'reset.css'%}">
+  <link rel="stylesheet" href="{%static 'styles.css'%}">
+  <link rel="stylesheet" href="{%static 'games_list.css'%}">
+  <link rel="stylesheet" href="{%static 'games_detail.css'%}">
+</head>
 
-  <!--3. user==player_b % 아직 응답하지 않은 상황-->
-  {% elif result.0 == 'player_b' and result.1 == '반격중'%}
-    <form action="{% url 'games:counterattack' game.pk %}">
-      <button>반격하기</button>
-    </form>
-  <!--4. user==player_b % 결과가 나온 상황-->
-  {% else %}
-    <h4>{{rule}}</h4>
-    <h4>{{game.player_a.nickname}} {{game.a_choice}}</h4>
-    <h4>나: {{game.b_choice}}</h4>
-    <h4><span>결과</span>: {{result}}</h4>
-    {% if result == '승리'%}
-    <h4><span>점수</span>: {{game.b_choice}} 점</h4>
-    {% elif result == '패배'%}
-    <h4><span>점수</span>: -{{game.b_choice}} 점</h4>
-    {% elif result == '무승부'%}
-    <h4><span>점수</span>: 0 점</h4>
-    {%endif%}
+<body>
+  <header>
+    <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+    <ul>
+      <li><a href="#">게임하기</a></li>
+      <li><a href="#">랭킹보기</a></li>
+      <li><a href="#">로그아웃</a></li>
+    </ul>
+  </header>
 
-  {% endif %}
-    <a href="{% url 'games:game_list' %}">전적 목록</h4>
-  {% endblock content %}
+  <main>
+    <div class="game_detail-container">
+      <div class="game_detail-title">{{game.player_a.username}} <span>VS</span> {{game.player_b.username}}</div>
+      <!--1. user==player_a & player_b가 아직 응답이 없을 때-->
+      {% if result.0 == 'player_a' and result.1 == '진행중' %}
+      <div class="game_detail-content">
+        <h4>진행 중...</h4>
+        <h4>나: {{game.a_choice}}</h4>
+        <form action="{% url 'games:delete' game.pk %}" method="POST">
+          {%csrf_token%}
+          <button type="submit" class="btn-neon">게임 취소</button>
+        </form>
+      </div>
+      <!--2. user==player_a & player_b가 응답해서 결과가 나온 상황-->
+      {% elif result.0 == 'player_a' and result.1 != '진행중' %}
+      <div class="game_detail-content3">
+        <h4 class="create_line">{{rule}}</h4>
+        <h4 class="create_line">나: {{game.a_choice}}</h4>
+        <h4 class="create_line">{{game.player_b.username}} {{game.b_choice}}</h4>
+        <h4 class="create_line">결과: {{result.1}}</h4>
+        {% if result.1 == '승리'%}
+        <h4 class="create_line"><span>점수</span>: {{game.a_choice}} 점</h4>
+        {% elif result.1 == '패배'%}
+        <h4 class="create_line"><span>점수</span>: -{{game.a_choice}} 점</h4>
+        {% elif result.1 == '무승부'%}
+        <h4 class="create_line"><span>점수</span>: 0 점</h4>
+        {% endif %}
+      </div>
+
+      <!--3. user==player_b % 아직 응답하지 않은 상황-->
+      {% elif result.0 == 'player_b' and result.1 == '반격중'%}
+      <div class="game_detail-content2">
+        <form action="{% url 'games:counterattack' game.pk %}">
+          <button class="btn-neon">대응하기</button>
+        </form>
+      </div>
+      <!--4. user==player_b % 결과가 나온 상황-->
+      {% else %}
+      <div class="game_detail-content3">
+        <h4 class="create_line">{{rule}}</h4>
+        <h4 class="create_line">{{game.player_a.username}} {{game.a_choice}}</h4>
+        <h4 class="create_line">나: {{game.b_choice}}</h4>
+        <h4 class="create_line"><span>결과</span>: {{result.1}}</h4>
+        {% if result.1 == '승리' %}
+        <h4 class="create_line"><span>점수</span>: {{game.b_choice}} 점</h4>
+        {% elif result.1 == '패배'%}
+        <h4 class="create_line"><span>점수</span>: -{{game.b_choice}} 점</h4>
+        {% elif result.1 == '무승부'%}
+        <h4 class="create_line"><span>점수</span>: 0 점</h4>
+        {%endif%}
+      </div>
+
+      {% endif %}
+      <div class="game_detail-footer">
+        <form action="{% url 'games:game_list' %}" method="GET">
+          {%csrf_token%}
+          <button type="submit" class="btn-neon">전적 목록</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
