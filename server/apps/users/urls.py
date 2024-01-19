@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+# from .views import CustomSignupView
 app_name = "users"
 
 urlpatterns = [
@@ -10,3 +11,4 @@ urlpatterns = [
     path("signup/", views.signup, name="signup"),
     path('login/naver_login/callback/', views.naver_login_callback),
 ]
+
