@@ -1,5 +1,20 @@
+header {
+  height: 80.16px !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #222;
+}
+
 header > a {
   text-decoration: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 a:visited {
@@ -13,6 +28,11 @@ a:visited {
   align-items: center;
   justify-content: flex-end;
   margin-left: 10px;
+}
+
+.login_signup_menu {
+  display: flex;
+  align-items: center;
 }
 
 .gamestart-btn {
@@ -60,15 +80,19 @@ a:visited {
 .signup-block > h1 {
   color: black;
   font-size: 50px;
+  margin: 20px 10px;
 }
 
 .data-container {
   width: 100%;
+  flex: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 30px 0;
   opacity: 0.8;
+  gap: 20px;
 }
 
 .btn-neon {
@@ -80,10 +104,26 @@ a:visited {
   border-radius: 5px;
   transition: 0.5s ease;
 }
+
 .btn-neon:hover {
   background-color: rgb(139, 200, 48);
-  color: white;
+  color: white !important ;
 }
+
+.sbmit-btn {
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.main-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 
 .main_button_list {
   display: flex;
@@ -97,6 +137,13 @@ a:visited {
 .main-slogun {
   font-size: 35px;
   color: white;
+  margin-bottom: 30px;
+}
+
+.main-image {
+  width: 300px;
+  width: 300px;
+  background-repeat: no-repeat;
 }
 
 .connect-user-hi {
@@ -123,7 +170,6 @@ a:visited {
   gap: 10px;
 }
 
-/*########################여기서부터 수정입니다############################## */
 a {
   text-decoration-line: none;
 }

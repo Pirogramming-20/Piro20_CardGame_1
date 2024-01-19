@@ -1,49 +1,47 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PIROGRAM CARDGAME</title>
-  <script
-    type="text/javascript"
-    src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-    charset="utf-8"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIROGRAM CARDGAME</title>
+    <script
+      type="text/javascript"
+      src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+      charset="utf-8"
     ></script>
-  <script
-    type="text/javascript"
-    src="http://code.jquery.com/jquery-1.11.3.min.js"
-  ></script>
-  <!-- <script src="/Piro20_CardGame_1/server/static/scripts.js" defer></script> -->
-  <link rel="stylesheet" href="{%static 'styles.css'%}">
-  <link rel="stylesheet" href="{%static 'reset.css'%}">
-  <link rel="stylesheet" href="{%static 'users/css/main.css'%}">
-</head>
-<body>
+    <script
+      type="text/javascript"
+      src="http://code.jquery.com/jquery-1.11.3.min.js"
+    ></script>
+    <!-- <script src="/Piro20_CardGame_1/server/static/scripts.js" defer></script> -->
+    <link rel="stylesheet" href="{%static 'styles.css'%}" />
+    <link rel="stylesheet" href="{%static 'reset.css'%}" />
+    <link rel="stylesheet" href="{%static 'users/css/main.css'%}" />
+  </head>
+  <body>
     <div class="container">
-    <header>
+      <header>
         <a href="/"><h1>♣️ PIROGRAM CARDGAME ♦️</h1></a>
         <nav>
-        {% if user.is_authenticated %}
-        <div class="after_login_menu">
-          <a class="menu-btn" href="{% url 'games:start' %}">게임하기</a>
-          <!-- 랭킹보기 a 태그 추가해야함. -->
-          <a class="menu-btn" href="{% url 'games:start' %}">랭킹보기</a>
-          <a class="menu-btn" href="{% url 'users:logout' %}">로그아웃</a>
-        </div>
+          {% if user.is_authenticated %}
+          <div class="after_login_menu">
+            <a class="menu-btn" href="{% url 'games:start' %}">게임하기</a>
+            <a class="menu-btn" href="{% url 'games:start' %}">랭킹보기</a>
+            <a class="menu-btn" href="{% url 'users:logout' %}">로그아웃</a>
+          </div>
+
           {% else %}
-        <ul>
+          <ul class="login_signup_menu">
             <li><a href="{% url 'users:login' %}">Login</a></li>
             <li><a href="{% url 'users:signup' %}">SignUp</a></li>
-        </ul>
-        {% endif %}
+          </ul>
+          {% endif %}
         </nav>
-    </header>
-    <section class="data-container">
-      {% block content %} {% endblock content %}
-    </section>
+      </header>
+      <section class="data-container">
+        {% block content %} {% endblock content %}
+      </section>
     </div>
   </body>
 </html>
-
-
