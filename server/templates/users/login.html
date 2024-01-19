@@ -8,11 +8,11 @@
 {% block content %} -->
 <form method="POST" action="">
   {% csrf_token %} {{ form }}
-  <li><a href="{% url 'users:login' %}">Login</a></li>
-  <a>구글 로그인</a>
-  <a>네이버 로그인</a>
-  <a>카카오 로그인</a>
-  <li><a href="{% url 'users:signup' %}">Signup</a></li>
+  <li><a href="{% url 'users:login' %}">Login</a><a href="{% url 'users:signup' %}">Signup</a></li>
+  <div></div>
+  <a class="social-login">구글 로그인</a>
+  <a class="social-login">네이버 로그인</a>
+  <a class="social-login">카카오 로그인</a>
   <button>Login</button>
 </form>
 <div id="naver_id_login"></div>
