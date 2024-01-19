@@ -1,33 +1,56 @@
-{% extends 'base.html' %} 
-{% block content %}
-{%for game in games%}
-<div class="itemlist">
-    <div class="itemlist_user">
-        <div class="player">{{game.game.player_a.nickname}}</div>
-        <span>VS</span>
-        <div class="player">{{game.game.player_b.nickname}}</div>
-    </div>
-    <div class="itemlist_result">
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PIROGRAM CARDGAME</title>
+<link rel="stylesheet" href="{%static 'styles.css'%}">
+<link rel="stylesheet" href="{%static 'styles_games.css'%}">
+</head>
+<body>
+
+    <header>
+        <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+        <ul>
+        <li><a href="#">게임하기</a></li>
+        <li><a href="#">랭킹보기</a></li>
+        <li><a href="#">로그아웃</a></li>
+        </ul>
+    </header>
+
+    <main>
         {% if request.user.is_authenticated %}
-            {% if game.player == 'player_a' and game.result == '진행중' %} 
-                <span>진행중...</span>
-                <form action="{% url 'games:delete' game.game.pk %}" method="POST">
-                    {%csrf_token%}
-                    <button type="submit" class="btn btn-delete">게임 취소</button>
-                </form>    
-            {% elif game.player == 'player_b' and game.result == '반격중' %} 
-                <a href="{% url 'games:counterattack' game.game.pk %}" >반격하기</a>    
-            {% else %} 
-                <span>결과 : {{game.result}}</span>
+        <br>현재 플레이어의 게임 전적을 보여주는 페이지입니다. 진행 중인 게임은 취소할 수 있어요!</br> 
+        <br>물론 자신이 공격한 (= 도전장을 내민) 게임만 해당되겠죠?</br>
+        <div class="games-list">
+        {% for game in games %}
+            <div class="game-item">
+            <p>{{game.game.player_a.nickname}} vs {{game.game.player_b.nickname}}</p>
+            {% if game.player == 'player_a' and game.result == '진행중' %}
+            <p>진행 중...</p>
+            <form action="{% url 'games:delete' game.game.pk %}" method="POST">
+            {%csrf_token%}
+            <button type="submit">게임 취소</button>
+            </form>
+            <button>게임 정보</button>
+            {% elif game.player == 'player_b' and game.result == '반격중' %}
+            <form action="{% url 'games:counterattack' game.game.pk %}" method="POST">
+            {%csrf_token%}
+            <button type="submit">반격하기</button>
+            </form>
+            <button>게임 정보</button>
+
+            {% else %}
+            <p>결과:{{game.result}}</p>
+            <button>게임 정보</button>
             {% endif %}
-        {% else %}
-        <span>인증된 유저가 아님</span>
+            </div>
+        {% endfor %}
+        </div>
         {% endif %}
-    </div>
-    <div class="itemlist_detail">
-        <a href="{%url 'games:detail' game.game.pk%}"> 게임정보 </a>
-    </div>
-</div>
-<br>
-{% endfor %}
-{% endblock %}
+    </main>
+
+</body>
+</html>
+

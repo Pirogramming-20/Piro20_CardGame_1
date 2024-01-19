@@ -1,0 +1,13 @@
+.games-list{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.game-item {
+    display: flex;
+    align-content: space-evenly;
+    justify-content: space-between;
+    margin: auto 50px;
+    width: 100%;
+}
