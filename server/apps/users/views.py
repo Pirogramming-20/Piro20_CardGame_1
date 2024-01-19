@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from apps.users.forms import SignupForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
+# from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
 from .models import User,SocialUser
 import json
@@ -15,6 +16,9 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
+            print(user)
+            auth.login(request, user)
+            print("login success")
             return redirect('users:main')
         else:
             ctx={
