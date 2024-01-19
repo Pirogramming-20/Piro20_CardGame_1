@@ -16,7 +16,15 @@
     <h4>{{rule}}</h4>
     <h4>나: {{game.a_choice}}</h4>
     <h4>{{game.player_b.nickname}} {{game.b_choice}}</h4>
-    <h4>결과: {{result.1}}</h4>
+    <h4>결과: {{result}}</h4>
+    {% if result == '승리'%}
+    <h4><span>점수</span>: {{game.a_choice}} 점</h4>
+    {% elif result == '패배'%}
+    <h4><span>점수</span>: -{{game.a_choice}} 점</h4>
+    {% elif result == '무승부'%}
+    <h4><span>점수</span>: 0 점</h4>
+    {%endif%}
+
   <!--3. user==player_b % 아직 응답하지 않은 상황-->
   {% elif result.0 == 'player_b' and result.1 == '반격중'%}
     <form action="{% url 'games:counterattack' game.pk %}">
@@ -27,7 +35,15 @@
     <h4>{{rule}}</h4>
     <h4>{{game.player_a.nickname}} {{game.a_choice}}</h4>
     <h4>나: {{game.b_choice}}</h4>
-    <h4>결과: {{result.1}}</h4>
+    <h4><span>결과</span>: {{result}}</h4>
+    {% if result == '승리'%}
+    <h4><span>점수</span>: {{game.b_choice}} 점</h4>
+    {% elif result == '패배'%}
+    <h4><span>점수</span>: -{{game.b_choice}} 점</h4>
+    {% elif result == '무승부'%}
+    <h4><span>점수</span>: 0 점</h4>
+    {%endif%}
+
   {% endif %}
     <a href="{% url 'games:game_list' %}">전적 목록</h4>
   {% endblock content %}
