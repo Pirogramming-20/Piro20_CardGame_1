@@ -19,15 +19,17 @@ header h1 {
 font-size: 24px;
 }
 
-header nav ul {
+header ul {
 list-style: none;
 display: flex;
 }
 
-header nav ul li a {
-color: white;
-text-decoration: none;
-padding: 5px 10px;
+header ul li a {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
 }
 
 .game_list_header,
@@ -79,6 +81,7 @@ padding: 5px 10px;
     gap: 10px;
     align-items: center;
 }
+
 .btn-neon {
     font-size: 18px;
     font-weight: bold;
@@ -88,6 +91,7 @@ padding: 5px 10px;
     border-radius: 5px;
     transition: 0.5s ease;
 }
+
 .btn-neon:hover {
     background-color: rgb(139, 200, 48);
     color: white;
