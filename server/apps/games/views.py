@@ -28,6 +28,34 @@ def mapping_rule(rule):
         return "숫자가 더 큰 사람이 대결에서 이깁니다"
     elif rule == 1:
         return "숫자가 더 작은 사람이 대결에서 이깁니다"
+
+def game_status(game: Game, user):
+    # 1. 유저가 a 일때
+    if (game.player_a.nickname == user.nickname):
+        # 1-a: 승부가 난 경우
+        if (game.b_choice != None):
+            if game.winner == user.nickname:
+                return ["player_a", "승리"]
+            elif game.winner == None:
+                return ["player_a","무승부"]
+            else:
+                return ["player_a", "패배"]
+        # 1-b: 상대 유저를 기다리는 경우
+        else:
+            return ["player_a", "진행중"]
+    # 2. 유저가 b 일때
+    else:
+        ## 2-a: 승부가 난 경우
+        if (game.b_choice != None):
+            if game.winner == user.nickname:
+                return ["player_b", "승리"]
+            elif game.winner == None:
+                return ["player_b","무승부"]
+            else:
+                return ["player_b","패배"]
+        # 2-b: 반격 중인 경우
+        else:
+            return ["player_b", "반격중"]
     
 # 공격하기 페이지
 def start(request):
@@ -47,26 +75,24 @@ def start(request):
 def game_list(request):
     user_nickname = request.user.nickname
     games = Game.objects.filter(Q(player_a__nickname=user_nickname) | Q(player_b__nickname=user_nickname))
-    ctx = {'games': games}
+
+    # game_status 가 추가된 데이터 
+    games_with_status = []
+    for game in games:
+        status_result = game_status(game, request.user)
+        games_with_status.append(
+            {'game':game, 'player': status_result[0], 'result': status_result[1]})
+
+    ctx = {'games': games_with_status}
     return render(request, 'games/games_list.html', ctx)
 
 def detail(request, pk):
-    #ajax로 창 안쪽 내용만 바꿔야 할듯
-    #1.게임이 끝났을 경우 - 3번 / 2. 게임이 안끝난 나의 입장 - 1번 / 3. 게임이 안끝난 상대 입장 - 2번
     '''
     pk: Game pk
     '''
     game = Game.objects.get(pk=pk)
     rule = mapping_rule(game.rule)
-    if request.user.nickname ==  game.winner:
-        result = "승리"
-    elif (game.winner == None) & (game.b_choice == None):
-        result = "진행중"
-    elif (game.winner == None) & (game.b_choice != None):
-        print(f"game.winner: {game.winner}")
-        result = "무승부"
-    else:
-        result = "패배"
+    result = game_status(game, request.user)
     ctx = {"game": game, "result": result, "rule": rule}
     return render(request, 'games/games_detail.html', ctx)
 

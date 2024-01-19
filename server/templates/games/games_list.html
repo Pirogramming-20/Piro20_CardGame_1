@@ -3,34 +3,29 @@
 {%for game in games%}
 <div class="itemlist">
     <div class="itemlist_user">
-        <div class="player">{{game.player_a.nickname}}</div>
+        <div class="player">{{game.game.player_a.nickname}}</div>
         <span>VS</span>
-        <div class="player">{{game.player_b.nickname}}</div>
+        <div class="player">{{game.game.player_b.nickname}}</div>
     </div>
     <div class="itemlist_result">
         {% if request.user.is_authenticated %}
-            {% if game.player_a.nickname == request.user.nickname and game.b_choice is None %} <!--본인a / b가 응답하지 않았을때-->
+            {% if game.player == 'player_a' and game.result == '진행중' %} 
                 <span>진행중...</span>
-                <form action="{% url 'games:delete' game.pk %}" method="POST">
+                <form action="{% url 'games:delete' game.game.pk %}" method="POST">
                     {%csrf_token%}
                     <button type="submit" class="btn btn-delete">게임 취소</button>
                 </form>    
-            {% elif game.player_b.nickname == request.user.nickname and game.b_choice is None %} <!--본인b / b가 응답하지 않았을때-->
-                <a href="{% url 'games:counterattack' game.pk %}" >반격하기</a>    
-            {% elif game.player_a.nickname == request.user.nickname and game.winner == request.user.nickname %} <!--본인a:승자일때-->
-                <span>결과 : 승리</span>
-            {% elif game.player_b.nickname == request.user.nickname and game.winner != request.user.nickname %} <!--본인a:승자b일때-->
-                <span>결과 : 패배</span>
-            
-            {% else %}
-                <span>결과 : 무승부</span>
+            {% elif game.player == 'player_b' and game.result == '반격중' %} 
+                <a href="{% url 'games:counterattack' game.game.pk %}" >반격하기</a>    
+            {% else %} 
+                <span>결과 : {{game.result}}</span>
             {% endif %}
         {% else %}
         <span>인증된 유저가 아님</span>
         {% endif %}
     </div>
     <div class="itemlist_detail">
-        <a href="{%url 'games:detail' game.pk%}"> 게임정보 </a>
+        <a href="{%url 'games:detail' game.game.pk%}"> 게임정보 </a>
     </div>
 </div>
 <br>
