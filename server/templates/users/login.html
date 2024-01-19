@@ -1,10 +1,11 @@
-{% extends 'users/main.html' %} {% block head %}
+<!-- {% extends 'users/main.html' %} {% block head %}
 <script
   type="text/javascript"
   src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
   charset="utf-8"
 ></script>
-{% endblock head %} {% block content %}
+{% endblock head %} 
+{% block content %} -->
 <form method="POST" action="">
   {% csrf_token %} {{ form }}
   <button>Login</button>
