@@ -35,8 +35,6 @@ def socaial_signup(name, nickname):
         password = make_password(name)
         User.objects.create( password = password, nickname = nickname, score = 0)
         
-        #accountpk = User.objects.get(user_id = name)
-        #SocialUser.objects.create(name, nickname, accountpk)
     except:
         print("소셜 회원가입 error!!")
         return 0
@@ -88,6 +86,7 @@ def login(request):
                 auth.login(request, s_user)  # 해당 값으로 로그인 
                 return redirect('users:main')
                 # 로그 아웃 버튼을 누를 때, 네이버 로그아웃, User 로그 아웃 둘다 수행 해야함
+        
 
                           
 
