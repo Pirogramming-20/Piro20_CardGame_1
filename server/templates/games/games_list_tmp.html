@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+{% block content %}
+{%for game in games%}
+<div class="itemlist">
+    <div class="itemlist_user">
+        <div class="player">{{game.game.player_a.nickname}}</div>
+        <span>VS</span>
+        <div class="player">{{game.game.player_b.nickname}}</div>
+    </div>
+    <div class="itemlist_result">
+        {% if request.user.is_authenticated %}
+            {% if game.player == 'player_a' and game.result == '진행중' %} 
+                <span>진행중...</span>
+                <form action="{% url 'games:delete' game.game.pk %}" method="POST">
+                    {%csrf_token%}
+                    <button type="submit" class="btn btn-delete">게임 취소</button>
+                </form>    
+            {% elif game.player == 'player_b' and game.result == '반격중' %} 
+                <a href="{% url 'games:counterattack' game.game.pk %}" >반격하기</a>    
+            {% else %} 
+                <span>결과 : {{game.result}}</span>
+            {% endif %}
+        {% else %}
+        <span>인증된 유저가 아님</span>
+        {% endif %}
+    </div>
+    <div class="itemlist_detail">
+        <a href="{%url 'games:detail' game.game.pk%}"> 게임정보 </a>
+    </div>
+</div>
+<br>
+{% endfor %}
+{% endblock %}
