@@ -39,16 +39,25 @@
                     <button type="submit" class="btn-neon btn-counterattack">게임 취소</button>
                     </form>
                 </div>
-                <button class="btn-neon">게임 정보</button>
+                <form class="btn-neon" action="{% url 'games:detail' game.game.pk %}" method="POST">
+                    {%csrf_token%}
+                    <button>게임 정보</button>
+                    </form>
             {% elif game.player == 'player_b' and game.result == '반격중' %}
                 <form action="{% url 'games:counterattack' game.game.pk %}" method="POST">
                 {%csrf_token%}
                 <button type="submit" class="btn-neon btn-counterattack">반격하기</button>
                 </form>
-                <button class="btn-neon">게임 정보</button>
+                <form class="btn-neon" action="{% url 'games:detail' game.game.pk %}" method="POST">
+                    {%csrf_token%}
+                    <button>게임 정보</button>
+                    </form>
             {% else %}
                 <h4>결과:{{game.result}}</h4>
-                <button class="btn-neon">게임 정보</button>
+                <form class="btn-neon" action="{% url 'games:detail' game.game.pk %}" method="POST">
+                    {%csrf_token%}
+                    <button>게임 정보</button>
+                    </form>
             {% endif %}
             </div>
         {% endfor %}
