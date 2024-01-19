@@ -27,10 +27,10 @@
         </div>
         {% if request.user.is_authenticated %}
         <div class="games_list_content">
-            <div class="current_player">현재 플레이어 : {{request.user.nickname}}</div>
+            <div class="current_player">현재 플레이어 : {{request.user.username}}</div>
         {% for game in games %}
             <div class="game_item">
-                <h4><span>{{ forloop.counter }}</span> - {{game.game.player_a.nickname}} <span>vs</span> {{game.game.player_b.nickname}}</h4>
+                <h4><span>{{ forloop.counter }}</span> - {{game.game.player_a.username}} <span>vs</span> {{game.game.player_b.username}}</h4>
             {% if game.player == 'player_a' and game.result == '진행중' %}
                 <div class="progress">
                     <h4>진행 중...</h4>
