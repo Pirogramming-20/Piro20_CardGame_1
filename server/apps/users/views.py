@@ -16,7 +16,6 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             print(user)
-            auth.login(request, user)
             print("login success")
             return redirect('users:main')
         else:
