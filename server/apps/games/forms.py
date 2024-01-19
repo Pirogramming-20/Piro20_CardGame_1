@@ -27,7 +27,7 @@ class GameFormAttacker(forms.ModelForm):
             (choice, choice) for choice in choices]
         # admin과 본인을 제외한 player로 선택항목 설정
         self.fields['player_b'].queryset = User.objects.exclude(is_superuser=1).exclude(
-            nickname=self.user.nickname)
+            username=self.user.username)
         self.fields['player_b'].label = "공격할 상대는?"
 
 # 2. Defender의 form
