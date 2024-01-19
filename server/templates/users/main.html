@@ -5,10 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    {% block head %} {% endblock head %}
   </head>
   <body>
     {% if user.is_authenticated %}
     <li><a href="{% url 'users:logout' %}">Logout</a></li>
+    <button class="Nlogout" onclick="naverlogout()">
+      {% csrf_token %}네이버 로그아웃
+    </button>
     {% else %}
     <li><a href="{% url 'users:login' %}">Login</a></li>
     <li><a href="{% url 'users:signup' %}">Signup</a></li>
