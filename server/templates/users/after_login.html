@@ -1,38 +1,55 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PIROGRAM CARDGAME</title>
-<link rel="stylesheet" href="{%static 'styles.css'%}">
-<link rel="stylesheet" href="{%static 'users/css/after_login.css'%}">
-</head>
-<body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIROGRAM CARDGAME</title>
+    <link rel="stylesheet" href="{%static 'styles.css'%}" />
+    <link rel="stylesheet" href="{%static 'users/css/after_login.css'%}" />
+  </head>
+  <body>
     <header>
-        <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
-        <nav>
-            <ul>
-                <li><a href="{% url 'games:start' %}">게임하기</a></li>
-                <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
-                <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
-            </ul>
-        </nav>
-    
+      <h1>♣️ PIROGRAM CARDGAME ♦️</h1>
+      <nav>
+        <ul>
+          <li><a href="{% url 'games:start' %}">게임하기</a></li>
+          <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
+          <li>
+            <a href="{% url 'users:logout' %}" onclick="naverlogout()"
+              >{%csrf_token%}로그아웃</a
+            >
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <main>
-        <h2>전 세계 피로그래밍과<br>한 판 승부 추리 카드게임</h2>
-        <p>{{user.username}}님이 로그인 중</p>
+      <h2>전 세계 피로그래밍과<br />한 판 승부 추리 카드게임</h2>
+      <p>{{user.username}}님이 로그인 중</p>
     </main>
 
     <div class="bottom_buttons">
-        <form method="GET" action="{% url 'games:start' %}">
+      <form method="GET" action="{% url 'games:start' %}">
         <button>게임하기</button>
-        </form>
-    <button>전적보기</button>
+      </form>
+      <button>전적보기</button>
     </div>
-</body>
+    <script>
+      function naverlogout() {
+        accsTK = localStorage.getItem("accsTK");
+        fetch(
+          `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=p3ty5OZcY15ufMgrfHPe&client_secret=EfaVjbEQ5T&access_token=${accsTK}&state=9caf3774-d3e0-4977-ab79-04e4e5e0c2b5&state=be6efbf7-bf94-4b29-b36f-663213729980&service_provider=NAVER`,
+          {
+            mode: "no-cors",
+            method: "GET",
+          }
+        )
+          .then(() => {
+            console.log("로그아웃 성공");
+          })
+          .catch((error) => console.log(error));
+      }
+    </script>
+  </body>
 </html>
-

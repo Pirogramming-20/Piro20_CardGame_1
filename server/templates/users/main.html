@@ -5,15 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PIROGRAM CARDGAME</title>
-    <script
-      type="text/javascript"
-      src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-      charset="utf-8"
-    ></script>
-    <script
-      type="text/javascript"
-      src="http://code.jquery.com/jquery-1.11.3.min.js"
-    ></script>
+    {% block head %} {% endblock head %}
     <!-- <script src="/Piro20_CardGame_1/server/static/scripts.js" defer></script> -->
     <link rel="stylesheet" href="{%static 'styles.css'%}" />
     <link rel="stylesheet" href="{%static 'users/css/main.css'%}" />
@@ -21,19 +13,30 @@
   <body>
     <div class="container">
       <header>
-        <a href="/"><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a>
+        <a href="/"
+          ><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a
+        >
         <nav>
           {% if user.is_authenticated %}
           <div class="after_login_menu">
             <a class="menu-btn" href="{% url 'games:start' %}">게임하기</a>
             <a class="menu-btn" href="{% url 'games:start' %}">랭킹보기</a>
-            <a class="menu-btn" href="{% url 'users:logout' %}">로그아웃</a>
+            <a
+              class="menu-btn"
+              href="{% url 'users:logout' %}"
+              onclick="naverlogout()"
+              >{%csrf_token%}로그아웃</a
+            >
           </div>
 
           {% else %}
           <ul class="login_signup_menu">
             <li><a href="{% url 'users:login' %}">Login</a></li>
-            <li><a href="{% url 'users:signup' %}">SignUp</a></li>
+            <li>
+              <a href="{% url 'users:signup' %}" onclick="naverlogout()"
+                >{%csrf_token%}SignUp</a
+              >
+            </li>
           </ul>
           {% endif %}
         </nav>
@@ -42,5 +45,21 @@
         {% block content %} {% endblock content %}
       </section>
     </div>
+    <script>
+      function naverlogout() {
+        accsTK = localStorage.getItem("accsTK");
+        fetch(
+          `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=p3ty5OZcY15ufMgrfHPe&client_secret=EfaVjbEQ5T&access_token=${accsTK}&state=9caf3774-d3e0-4977-ab79-04e4e5e0c2b5&state=be6efbf7-bf94-4b29-b36f-663213729980&service_provider=NAVER`,
+          {
+            mode: "no-cors",
+            method: "GET",
+          }
+        )
+          .then(() => {
+            console.log("로그아웃 성공");
+          })
+          .catch((error) => console.log(error));
+      }
+    </script>
   </body>
 </html>

@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from apps.users.forms import SignupForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import auth
-# from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import make_password
-from .models import User,SocialUser
+from .models import User
 import json
 
 def main(request):
@@ -35,13 +35,11 @@ def after_login(request):
         return redirect('users:afterlogin')
 
 
-def socaial_signup(name, nickname):
+def socaial_signup(name):
     try:
         password = make_password(name)
-        User.objects.create( password = password, nickname = nickname, score = 0)
-        
-        #accountpk = User.objects.get(user_id = name)
-        #SocialUser.objects.create(name, nickname, accountpk)
+        User.objects.create( password = password, username = name, score = 0, backend='allauth.account.auth_backends.AuthenticationBackend',)
+    
     except:
         print("소셜 회원가입 error!!")
         return 0
@@ -75,16 +73,15 @@ def login(request):
         try:
             data = json.loads(request.body.decode('utf-8'))
             name = str(data.get('name'))
-            nickname = str(data.get('nickname'))
             print("social user 데이터 수신 완료!")
         except:
             print("error!")
         else:
             try:
-                s_user = User.objects.get(nickname = nickname)
-            except:
+                s_user = User.objects.get(username = name)
+            except User.DoesNotExist:
                 print("해당하는 s_user 없음!")
-                socaial_signup(name, nickname) # 신규 로그인일 경우, 회원가입
+                socaial_signup(name) # 신규 로그인일 경우, 회원가입
                 auth.login(request, s_user)   # 회원가입한 계정으로 로그인
                 return redirect('users:main') 
                 
@@ -93,7 +90,6 @@ def login(request):
                 auth.login(request, s_user)  # 해당 값으로 로그인 
                 return redirect('users:main')
                 # 로그 아웃 버튼을 누를 때, 네이버 로그아웃, User 로그 아웃 둘다 수행 해야함
-
                     
 
 def logout(request):

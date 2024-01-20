@@ -155,8 +155,8 @@ AUTHENTICATION_BACKENDS = (
     #Needed to login by username in Django admin, regardless of 'allauth'
     'django.contrib.auth.backends.ModelBackend',
 
-    # 'allauth' specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
+    # # 'allauth' specific authentication methods, such as login by e-mail
+    # 'allauth.account.auth_backends.AuthenticationBackend',
 
     
     
@@ -190,22 +190,22 @@ SOCIALACCOUNT_PROVIDERS ={
 }},
 ######################################################
 
-"naver": {
-"APP": {
-"client_id": ("JSv6sk6FvtglbqmUHUBT"),
-"secret": ("cAjdyN7dnC"),
-"key": ""
-},
-# These are provider-specific settings that can only be
-# listed here:
-"SCOPE": [
+# "naver": {
+# "APP": {
+# "client_id": ("JSv6sk6FvtglbqmUHUBT"),
+# "secret": ("cAjdyN7dnC"),
+# "key": ""
+# },
+# # These are provider-specific settings that can only be
+# # listed here:
+# "SCOPE": [
 
-],
+# ],
 
-"AUTH_PARAMS": {
-"access_type": "online",
-'prompt': 'select_account',
-}},
+# "AUTH_PARAMS": {
+# "access_type": "online",
+# 'prompt': 'select_account',
+# }},
 ######################################################
 "google": {
 "APP": {

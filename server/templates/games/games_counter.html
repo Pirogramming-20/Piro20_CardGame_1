@@ -1,36 +1,58 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PIROGRAM CARDGAME</title>
-<link rel="stylesheet" href="{%static 'styles.css'%}">
-<link rel="stylesheet" href="{%static 'games_attack.css'%}">
-</head>
-<body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIROGRAM CARDGAME</title>
+    <link rel="stylesheet" href="{%static 'styles.css'%}" />
+    <link rel="stylesheet" href="{%static 'games_attack.css'%}" />
+  </head>
+  <body>
     <header>
-        <a href="/"><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a>
-    <nav>
+      <a href="/"
+        ><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a
+      >
+      <nav>
         <ul>
-            <li><a href="{% url 'games:start' %}">게임하기</a></li>
-            <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
-            <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
+          <li><a href="{% url 'games:start' %}">게임하기</a></li>
+          <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
+          <li>
+            <a href="{% url 'users:logout' %}" onclick="naverlogout()"
+              >{%srf_token%}로그아웃</a
+            >
+          </li>
         </ul>
-    </nav>
-    
+      </nav>
     </header>
 
     <div class="attack_content">
-    <form method="POST" class="attack_content" action="{% url 'games:counterattack' pk %}">
+      <form
+        method="POST"
+        class="attack_content"
+        action="{% url 'games:counterattack' pk %}"
+      >
         <h2>{{player_a}}에게 반격하세요!</h2>
-        {% csrf_token %} 
-        <div class="form-group">
-        {{ form }}
-        </div>
+        {% csrf_token %}
+        <div class="form-group">{{ form }}</div>
         <button class="btn-neon">반격하기!</button>
-    </form> 
+      </form>
     </div>
-</body>
+    <script>
+      function naverlogout() {
+        accsTK = localStorage.getItem("accsTK");
+        fetch(
+          `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=p3ty5OZcY15ufMgrfHPe&client_secret=EfaVjbEQ5T&access_token=${accsTK}&state=9caf3774-d3e0-4977-ab79-04e4e5e0c2b5&state=be6efbf7-bf94-4b29-b36f-663213729980&service_provider=NAVER`,
+          {
+            mode: "no-cors",
+            method: "GET",
+          }
+        )
+          .then(() => {
+            console.log("로그아웃 성공");
+          })
+          .catch((error) => console.log(error));
+      }
+    </script>
+  </body>
 </html>

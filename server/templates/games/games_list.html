@@ -1,69 +1,107 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PIROGRAM CARDGAME</title>
-<link rel="stylesheet" href="{%static 'games_list.css'%}">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIROGRAM CARDGAME</title>
+    <link rel="stylesheet" href="{%static 'games_list.css'%}" />
+  </head>
+  <body>
     <header>
-        <a href="/"><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a>        <nav>
-            <ul>
-                <li><a href="{% url 'games:start' %}">게임하기</a></li>
-                <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
-                <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
-            </ul>
-        </nav>
+      <a href="/"
+        ><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a
+      >
+      <nav>
+        <ul>
+          <li><a href="{% url 'games:start' %}">게임하기</a></li>
+          <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
+          <li>
+            <a href="{% url 'users:logout' %}" onclick="naverlogout()"
+              >{%csrf_token%}로그아웃</a
+            >
+          </li>
+        </ul>
+      </nav>
     </header>
 
     <main>
-        <div class="game_list_header">
-            <h1 class="game_result_title">게임전적</h1>
-            <h4 class="result_info">현재 플레이어의 게임 전적을 보여주는 페이지입니다. 진행 중인 게임은 취소할 수 있어요!</h4>
-            <h4 class="result_info">물론 자신이 공격한 (= 도전장을 내민) 게임만 해당되겠죠?</h4>
+      <div class="game_list_header">
+        <h1 class="game_result_title">게임전적</h1>
+        <h4 class="result_info">
+          현재 플레이어의 게임 전적을 보여주는 페이지입니다. 진행 중인 게임은
+          취소할 수 있어요!
+        </h4>
+        <h4 class="result_info">
+          물론 자신이 공격한 (= 도전장을 내민) 게임만 해당되겠죠?
+        </h4>
+      </div>
+      {% if request.user.is_authenticated %}
+      <div class="games_list_content">
+        <div class="current_player">
+          현재 플레이어 : {{request.user.username}}
         </div>
-        {% if request.user.is_authenticated %}
-        <div class="games_list_content">
-            <div class="current_player">현재 플레이어 : {{request.user.username}}</div>
         {% for game in games %}
-            <div class="game_item">
-                <h4><span>{{ forloop.counter }}</span> - {{game.game.player_a.username}} <span>vs</span> {{game.game.player_b.username}}</h4>
-            {% if game.player == 'player_a' and game.result == '진행중' %}
-                <div class="progress">
-                    <h4>진행 중...</h4>
-                    <form action="{% url 'games:delete' game.game.pk %}" method="POST">
-                    {%csrf_token%}
-                    <button type="submit" class="btn-neon btn-counterattack">게임 취소</button>
-                    </form>
-                </div>
-                <form action="{% url 'games:detail' game.game.pk %}" method="POST">
-                    {%csrf_token%}
-                    <button class="btn-neon">게임 정보</button>
-                    </form>
-            {% elif game.player == 'player_b' and game.result == '반격중' %}
-                <form action="{% url 'games:counterattack' game.game.pk %}" method="GET">
-                {%csrf_token%}
-                <button type="submit" class="btn-neon btn-counterattack">반격하기</button>
-                </form>
-                <form action="{% url 'games:detail' game.game.pk %}" method="POST">
-                    {%csrf_token%}
-                    <button class="btn-neon">게임 정보</button>
-                    </form>
-            {% else %}
-                <h4>결과:{{game.result}}</h4>
-                <form action="{% url 'games:detail' game.game.pk %}" method="POST">
-                    {%csrf_token%}
-                    <button class="btn-neon">게임 정보</button>
-                    </form>
-            {% endif %}
-            </div>
-        {% endfor %}
+        <div class="game_item">
+          <h4>
+            <span>{{ forloop.counter }}</span> - {{game.game.player_a.username}}
+            <span>vs</span> {{game.game.player_b.username}}
+          </h4>
+          {% if game.player == 'player_a' and game.result == '진행중' %}
+          <div class="progress">
+            <h4>진행 중...</h4>
+            <form action="{% url 'games:delete' game.game.pk %}" method="POST">
+              {%csrf_token%}
+              <button type="submit" class="btn-neon btn-counterattack">
+                게임 취소
+              </button>
+            </form>
+          </div>
+          <form action="{% url 'games:detail' game.game.pk %}" method="POST">
+            {%csrf_token%}
+            <button class="btn-neon">게임 정보</button>
+          </form>
+          {% elif game.player == 'player_b' and game.result == '반격중' %}
+          <form
+            action="{% url 'games:counterattack' game.game.pk %}"
+            method="GET"
+          >
+            {%csrf_token%}
+            <button type="submit" class="btn-neon btn-counterattack">
+              반격하기
+            </button>
+          </form>
+          <form action="{% url 'games:detail' game.game.pk %}" method="POST">
+            {%csrf_token%}
+            <button class="btn-neon">게임 정보</button>
+          </form>
+          {% else %}
+          <h4>결과:{{game.result}}</h4>
+          <form action="{% url 'games:detail' game.game.pk %}" method="POST">
+            {%csrf_token%}
+            <button class="btn-neon">게임 정보</button>
+          </form>
+          {% endif %}
         </div>
-        {% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
     </main>
-
-</body>
+    <script>
+      function naverlogout() {
+        accsTK = localStorage.getItem("accsTK");
+        fetch(
+          `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=p3ty5OZcY15ufMgrfHPe&client_secret=EfaVjbEQ5T&access_token=${accsTK}&state=9caf3774-d3e0-4977-ab79-04e4e5e0c2b5&state=be6efbf7-bf94-4b29-b36f-663213729980&service_provider=NAVER`,
+          {
+            mode: "no-cors",
+            method: "GET",
+          }
+        )
+          .then(() => {
+            console.log("로그아웃 성공");
+          })
+          .catch((error) => console.log(error));
+      }
+    </script>
+  </body>
 </html>
-

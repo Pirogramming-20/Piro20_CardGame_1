@@ -1,88 +1,114 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PIROGRAM CARDGAME</title>
+    <link rel="stylesheet" href="{%static 'styles.css'%}" />
+    <link rel="stylesheet" href="{%static 'games_detail.css'%}" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PIROGRAM CARDGAME</title>
-  <link rel="stylesheet" href="{%static 'styles.css'%}">
-  <link rel="stylesheet" href="{%static 'games_detail.css'%}">
-</head>
-
-<body>
-  <header>
-    <a href="/"><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a>    <nav>
+  <body>
+    <header>
+      <a href="/"
+        ><h1>♣️ PIROGRAM CARDGAME <span class="diamond">♦️</span></h1></a
+      >
+      <nav>
         <ul>
-            <li><a href="{% url 'games:start' %}">게임하기</a></li>
-            <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
-            <li><a href="{% url 'users:logout' %}">로그아웃</a></li>
+          <li><a href="{% url 'games:start' %}">게임하기</a></li>
+          <li><a href="{% url 'games:game_ranking' %}">랭킹보기</a></li>
+          <li>
+            <a href="{% url 'users:logout' %}" onclick="naverlogout()"
+              >{%csrf_token%}로그아웃</a
+            >
+          </li>
         </ul>
-    </nav>
-</header>
+      </nav>
+    </header>
 
-  <main>
-    <div class="game_detail-container">
-      <div class="game_detail-title">{{game.player_a.username}} <span>VS</span> {{game.player_b.username}}</div>
-      <!--1. user==player_a & player_b가 아직 응답이 없을 때-->
-      {% if result.0 == 'player_a' and result.1 == '진행중' %}
-      <div class="game_detail-content">
-        <h4>진행 중...</h4>
-        <h4>나: {{game.a_choice}}</h4>
-        <form action="{% url 'games:delete' game.pk %}" method="POST">
-          {%csrf_token%}
-          <button type="submit" class="btn-neon">게임 취소</button>
-        </form>
-      </div>
-      <!--2. user==player_a & player_b가 응답해서 결과가 나온 상황-->
-      {% elif result.0 == 'player_a' and result.1 != '진행중' %}
-      <div class="game_detail-content3">
-        <h4 class="create_line">{{rule}}</h4>
-        <h4 class="create_line">나: {{game.a_choice}}</h4>
-        <h4 class="create_line">{{game.player_b.username}} {{game.b_choice}}</h4>
-        <h4 class="create_line">결과: {{result.1}}</h4>
-        {% if result.1 == '승리'%}
-        <h4 class="create_line"><span>점수</span>: {{game.a_choice}} 점</h4>
-        {% elif result.1 == '패배'%}
-        <h4 class="create_line"><span>점수</span>: -{{game.a_choice}} 점</h4>
-        {% elif result.1 == '무승부'%}
-        <h4 class="create_line"><span>점수</span>: 0 점</h4>
+    <main>
+      <div class="game_detail-container">
+        <div class="game_detail-title">
+          {{game.player_a.username}} <span>VS</span> {{game.player_b.username}}
+        </div>
+        <!--1. user==player_a & player_b가 아직 응답이 없을 때-->
+        {% if result.0 == 'player_a' and result.1 == '진행중' %}
+        <div class="game_detail-content">
+          <h4>진행 중...</h4>
+          <h4>나: {{game.a_choice}}</h4>
+          <form action="{% url 'games:delete' game.pk %}" method="POST">
+            {%csrf_token%}
+            <button type="submit" class="btn-neon">게임 취소</button>
+          </form>
+        </div>
+        <!--2. user==player_a & player_b가 응답해서 결과가 나온 상황-->
+        {% elif result.0 == 'player_a' and result.1 != '진행중' %}
+        <div class="game_detail-content3">
+          <h4 class="create_line">{{rule}}</h4>
+          <h4 class="create_line">나: {{game.a_choice}}</h4>
+          <h4 class="create_line">
+            {{game.player_b.username}} {{game.b_choice}}
+          </h4>
+          <h4 class="create_line">결과: {{result.1}}</h4>
+          {% if result.1 == '승리'%}
+          <h4 class="create_line"><span>점수</span>: {{game.a_choice}} 점</h4>
+          {% elif result.1 == '패배'%}
+          <h4 class="create_line"><span>점수</span>: -{{game.a_choice}} 점</h4>
+          {% elif result.1 == '무승부'%}
+          <h4 class="create_line"><span>점수</span>: 0 점</h4>
+          {% endif %}
+        </div>
+
+        <!--3. user==player_b % 아직 응답하지 않은 상황-->
+        {% elif result.0 == 'player_b' and result.1 == '반격중'%}
+        <div class="game_detail-content2">
+          <form action="{% url 'games:counterattack' game.pk %}">
+            <button class="btn-neon">대응하기</button>
+          </form>
+        </div>
+        <!--4. user==player_b % 결과가 나온 상황-->
+        {% else %}
+        <div class="game_detail-content3">
+          <h4 class="create_line">{{rule}}</h4>
+          <h4 class="create_line">
+            {{game.player_a.username}} {{game.a_choice}}
+          </h4>
+          <h4 class="create_line">나: {{game.b_choice}}</h4>
+          <h4 class="create_line"><span>결과</span>: {{result.1}}</h4>
+          {% if result.1 == '승리' %}
+          <h4 class="create_line"><span>점수</span>: {{game.b_choice}} 점</h4>
+          {% elif result.1 == '패배'%}
+          <h4 class="create_line"><span>점수</span>: -{{game.b_choice}} 점</h4>
+          {% elif result.1 == '무승부'%}
+          <h4 class="create_line"><span>점수</span>: 0 점</h4>
+          {%endif%}
+        </div>
+
         {% endif %}
+        <div class="game_detail-footer">
+          <form action="{% url 'games:game_list' %}" method="GET">
+            {%csrf_token%}
+            <button type="submit" class="btn-neon btn-result">전적 목록</button>
+          </form>
+        </div>
       </div>
-
-      <!--3. user==player_b % 아직 응답하지 않은 상황-->
-      {% elif result.0 == 'player_b' and result.1 == '반격중'%}
-      <div class="game_detail-content2">
-        <form action="{% url 'games:counterattack' game.pk %}">
-          <button class="btn-neon">대응하기</button>
-        </form>
-      </div>
-      <!--4. user==player_b % 결과가 나온 상황-->
-      {% else %}
-      <div class="game_detail-content3">
-        <h4 class="create_line">{{rule}}</h4>
-        <h4 class="create_line">{{game.player_a.username}} {{game.a_choice}}</h4>
-        <h4 class="create_line">나: {{game.b_choice}}</h4>
-        <h4 class="create_line"><span>결과</span>: {{result.1}}</h4>
-        {% if result.1 == '승리' %}
-        <h4 class="create_line"><span>점수</span>: {{game.b_choice}} 점</h4>
-        {% elif result.1 == '패배'%}
-        <h4 class="create_line"><span>점수</span>: -{{game.b_choice}} 점</h4>
-        {% elif result.1 == '무승부'%}
-        <h4 class="create_line"><span>점수</span>: 0 점</h4>
-        {%endif%}
-      </div>
-
-      {% endif %}
-      <div class="game_detail-footer">
-        <form action="{% url 'games:game_list' %}" method="GET">
-          {%csrf_token%}
-          <button type="submit" class="btn-neon btn-result">전적 목록</button>
-        </form>
-      </div>
-    </div>
-  </main>
-
-</body>
-
+    </main>
+    <script>
+      function naverlogout() {
+        accsTK = localStorage.getItem("accsTK");
+        fetch(
+          `https://nid.naver.com/oauth2.0/token?grant_type=delete&client_id=p3ty5OZcY15ufMgrfHPe&client_secret=EfaVjbEQ5T&access_token=${accsTK}&state=9caf3774-d3e0-4977-ab79-04e4e5e0c2b5&state=be6efbf7-bf94-4b29-b36f-663213729980&service_provider=NAVER`,
+          {
+            mode: "no-cors",
+            method: "GET",
+          }
+        )
+          .then(() => {
+            console.log("로그아웃 성공");
+          })
+          .catch((error) => console.log(error));
+      }
+    </script>
+  </body>
 </html>
